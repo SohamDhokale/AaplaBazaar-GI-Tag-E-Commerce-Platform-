@@ -66,3 +66,15 @@ class CheckoutForm(FlaskForm):
     shipping_pincode = StringField('PIN Code', validators=[DataRequired(), Length(min=6, max=10)])
     payment_method = SelectField('Payment Method', choices=[('cod', 'Cash On Delivery')], validators=[DataRequired()])
     submit = SubmitField('Place Order')
+
+class ReviewForm(FlaskForm):
+    rating = SelectField('Rating', choices=[
+        ('5', '★★★★★ Excellent'),
+        ('4', '★★★★☆ Good'),
+        ('3', '★★★☆☆ Average'),
+        ('2', '★★☆☆☆ Poor'),
+        ('1', '★☆☆☆☆ Very Poor')
+    ], validators=[DataRequired()])
+    title = StringField('Review Title', validators=[Optional(), Length(max=128)])
+    comment = TextAreaField('Your Review', validators=[Optional(), Length(min=10, max=1000)])
+    submit = SubmitField('Submit Review')

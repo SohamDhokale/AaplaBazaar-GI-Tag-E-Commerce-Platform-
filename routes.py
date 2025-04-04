@@ -7,8 +7,8 @@ from urllib.parse import urlparse
 from werkzeug.security import generate_password_hash
 
 from app import app, db
-from models import User, Product, Order, OrderItem, CartItem, WishlistItem, OrderTracking
-from forms import LoginForm, RegistrationForm, ProductForm, CheckoutForm
+from models import User, Product, Order, OrderItem, CartItem, WishlistItem, OrderTracking, Review
+from forms import LoginForm, RegistrationForm, ProductForm, CheckoutForm, ReviewForm
 from utils import send_sms_notification, generate_order_tracking
 
 # Home page
@@ -124,16 +124,57 @@ def products():
                            current_sort=sort,
                            search=search)
 
-@app.route('/product/<int:id>')
+@app.route('/product/<int:id>', methods=['GET', 'POST'])
 def product_detail(id):
     product = Product.query.get_or_404(id)
     # Get related products from the same category
     related_products = Product.query.filter_by(category=product.category).filter(Product.id != id).limit(4).all()
     
+    # Get reviews for the product
+    reviews = Review.query.filter_by(product_id=id).order_by(Review.created_at.desc()).all()
+    
+    # Calculate average rating
+    avg_rating = 0
+    if reviews:
+        avg_rating = sum(review.rating for review in reviews) / len(reviews)
+    
+    # Initialize review form
+    form = None
+    if current_user.is_authenticated:
+        form = ReviewForm()
+        if form.validate_on_submit():
+            # Check if user has already reviewed the product
+            existing_review = Review.query.filter_by(user_id=current_user.id, product_id=id).first()
+            
+            if existing_review:
+                # Update existing review
+                existing_review.rating = int(form.rating.data)
+                existing_review.title = form.title.data
+                existing_review.comment = form.comment.data
+                existing_review.updated_at = datetime.utcnow()
+                flash('Your review has been updated!', 'success')
+            else:
+                # Create new review
+                review = Review(
+                    user_id=current_user.id,
+                    product_id=id,
+                    rating=int(form.rating.data),
+                    title=form.title.data,
+                    comment=form.comment.data
+                )
+                db.session.add(review)
+                flash('Thank you for your review!', 'success')
+            
+            db.session.commit()
+            return redirect(url_for('product_detail', id=id))
+    
     return render_template('product_detail.html', 
-                           title=product.name,
-                           product=product,
-                           related_products=related_products)
+                          title=product.name,
+                          product=product,
+                          related_products=related_products,
+                          reviews=reviews,
+                          avg_rating=avg_rating,
+                          form=form)
 
 # Cart routes
 @app.route('/cart')
@@ -478,6 +519,23 @@ def update_profile():
         return redirect(url_for('profile'))
     
     return render_template('update_profile.html', title='Update Profile', form=form)
+
+# Review routes
+@app.route('/delete_review/<int:review_id>', methods=['POST'])
+@login_required
+def delete_review(review_id):
+    review = Review.query.get_or_404(review_id)
+    
+    # Verify that the review belongs to the current user or user is admin
+    if review.user_id != current_user.id and not current_user.is_admin:
+        abort(403)
+    
+    product_id = review.product_id
+    db.session.delete(review)
+    db.session.commit()
+    
+    flash('Review deleted successfully!', 'success')
+    return redirect(url_for('product_detail', id=product_id))
 
 # Admin routes
 @app.route('/admin')
