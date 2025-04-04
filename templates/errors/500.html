@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Server Error - AaplaBazaar{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-md-6">
+                <img src="https://cdnjs.cloudflare.com/ajax/libs/ionicons/5.5.1/collection/components/icon/svg/warning-outline.svg" alt="Server Error" class="mb-4" style="width: 120px; height: 120px;">
+                <h1 class="display-1 text-muted">500</h1>
+                <h2 class="mb-4">Internal Server Error</h2>
+                <p class="lead mb-4">Something went wrong on our end. We're working to fix the problem and apologize for the inconvenience.</p>
+                <div class="d-flex justify-content-center">
+                    <a href="{{ url_for('index') }}" class="btn btn-primary me-3">
+                        <i class="fas fa-home me-2"></i> Go to Homepage
+                    </a>
+                    <a href="javascript:history.back()" class="btn btn-outline-primary">
+                        <i class="fas fa-arrow-left me-2"></i> Go Back
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
