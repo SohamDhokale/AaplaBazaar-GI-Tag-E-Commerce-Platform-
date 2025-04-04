@@ -361,7 +361,13 @@ def checkout():
             return redirect(checkout_session.url)
         else:
             app.logger.error("Failed to create Stripe checkout session")
-            flash('Payment processing error. The payment gateway is currently unavailable. Please try again later or contact support.', 'danger')
+            
+            # Check if we have a publishable key issue
+            if os.environ.get('STRIPE_SECRET_KEY', '').startswith('pk_'):
+                flash('Payment processing error: Invalid API key configuration. Please contact the administrator.', 'danger')
+            else:
+                flash('Payment processing error. The payment gateway is currently unavailable. Please try again later or contact support.', 'danger')
+            
             return redirect(url_for('checkout'))
     
     return render_template('checkout.html', 

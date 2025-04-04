@@ -7,12 +7,18 @@ import stripe
 from twilio.rest import Client
 from flask import url_for
 
-# Configure Stripe
-stripe.api_key = os.environ.get('STRIPE_SECRET_KEY')
-
-# Logging for debugging
+# Configure logging
 logging.basicConfig(level=logging.DEBUG)
-logging.info(f"Stripe API key configured: {stripe.api_key is not None}")
+
+# Configure Stripe
+stripe_key = os.environ.get('STRIPE_SECRET_KEY')
+if stripe_key and stripe_key.startswith('pk_'):
+    logging.error("ERROR: You provided a publishable key (pk_) instead of a secret key (sk_)")
+    logging.error("Please update your STRIPE_SECRET_KEY environment variable with a secret key")
+    # Don't set the api_key if it's a publishable key to avoid further issues
+else:
+    stripe.api_key = stripe_key
+    logging.info(f"Stripe API key configured: {stripe.api_key is not None}")
 
 # Twilio configuration
 TWILIO_ACCOUNT_SID = os.environ.get("TWILIO_ACCOUNT_SID", "your_twilio_sid")
@@ -45,10 +51,12 @@ def create_payment_session(products, total_amount, success_url, cancel_url):
     """
     Create a Stripe checkout session
     """
-    try:
-        # Log the Stripe secret key status
-        logging.info(f"Stripe API key configured: {stripe.api_key is not None}")
+    # First check if we have a valid API key
+    if not stripe.api_key or (stripe_key and stripe_key.startswith('pk_')):
+        logging.error("Cannot create Stripe session: Invalid or missing secret key")
+        return None
         
+    try:
         # Convert to paisa (Stripe uses smallest currency unit)
         amount_in_paisa = int(total_amount * 100)
         
@@ -77,12 +85,17 @@ def create_payment_session(products, total_amount, success_url, cancel_url):
         logging.info(f"Checkout session created successfully: {checkout_session.id}")
         return checkout_session
     except Exception as e:
+        error_msg = str(e)
         if hasattr(e, 'user_message'):
-            # Handle specific Stripe errors
-            logging.error(f"Stripe error: {e.user_message}")
-        else:
-            # Handle other errors
-            logging.error(f"Stripe session creation failed: {str(e)}")
+            error_msg = e.user_message
+        
+        # Log detailed error information
+        logging.error(f"Stripe session creation failed: {error_msg}")
+        
+        # Check for specific error types
+        if "secret_key_required" in error_msg:
+            logging.error("You need to use a secret key (sk_) for this operation, not a publishable key (pk_)")
+        
         return None
 
 def generate_order_tracking(order):
