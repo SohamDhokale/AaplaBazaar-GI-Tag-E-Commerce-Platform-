@@ -299,13 +299,13 @@ function submitFormAjax(form, successCallback, errorCallback) {
 
 // Show flash message
 function showFlashMessage(message, type) {
-    const flashContainer = document.querySelector('.flash-container');
+    let flashContainer = document.querySelector('.flash-container');
     
     if (!flashContainer) {
-        const newFlashContainer = document.createElement('div');
-        newFlashContainer.classList.add('flash-container');
+        flashContainer = document.createElement('div');
+        flashContainer.classList.add('flash-container');
         const mainContent = document.querySelector('main') || document.body;
-        mainContent.insertBefore(newFlashContainer, mainContent.firstChild);
+        mainContent.insertBefore(flashContainer, mainContent.firstChild);
     }
     
     const flashMessage = document.createElement('div');
@@ -321,8 +321,6 @@ function showFlashMessage(message, type) {
     });
     
     flashMessage.appendChild(closeButton);
-    
-    const flashContainer = document.querySelector('.flash-container');
     flashContainer.appendChild(flashMessage);
     
     // Auto-dismiss
