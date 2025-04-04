@@ -2,23 +2,12 @@ import os
 import logging
 from datetime import datetime, timedelta
 import random
-import stripe
 
 from twilio.rest import Client
 from flask import url_for
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
-
-# Configure Stripe
-stripe_key = os.environ.get('STRIPE_SECRET_KEY')
-if stripe_key and stripe_key.startswith('pk_'):
-    logging.error("ERROR: You provided a publishable key (pk_) instead of a secret key (sk_)")
-    logging.error("Please update your STRIPE_SECRET_KEY environment variable with a secret key")
-    # Don't set the api_key if it's a publishable key to avoid further issues
-else:
-    stripe.api_key = stripe_key
-    logging.info(f"Stripe API key configured: {stripe.api_key is not None}")
 
 # Twilio configuration
 TWILIO_ACCOUNT_SID = os.environ.get("TWILIO_ACCOUNT_SID", "your_twilio_sid")
@@ -47,56 +36,7 @@ def send_sms_notification(to_phone_number, message):
         logging.error(f"Failed to send SMS: {str(e)}")
         return False
 
-def create_payment_session(products, total_amount, success_url, cancel_url):
-    """
-    Create a Stripe checkout session
-    """
-    # First check if we have a valid API key
-    if not stripe.api_key or (stripe_key and stripe_key.startswith('pk_')):
-        logging.error("Cannot create Stripe session: Invalid or missing secret key")
-        return None
-        
-    try:
-        # Convert to paisa (Stripe uses smallest currency unit)
-        amount_in_paisa = int(total_amount * 100)
-        
-        logging.info(f"Creating Stripe checkout session for amount: {amount_in_paisa} paisa")
-        logging.info(f"Success URL: {success_url}")
-        logging.info(f"Cancel URL: {cancel_url}")
-        
-        checkout_session = stripe.checkout.Session.create(
-            payment_method_types=['card'],
-            line_items=[{
-                'price_data': {
-                    'currency': 'inr',
-                    'product_data': {
-                        'name': 'AaplaBazaar Order',
-                        'description': f'Order total for {len(products)} items',
-                    },
-                    'unit_amount': amount_in_paisa,
-                },
-                'quantity': 1,
-            }],
-            mode='payment',
-            success_url=success_url,
-            cancel_url=cancel_url,
-        )
-        
-        logging.info(f"Checkout session created successfully: {checkout_session.id}")
-        return checkout_session
-    except Exception as e:
-        error_msg = str(e)
-        if hasattr(e, 'user_message'):
-            error_msg = e.user_message
-        
-        # Log detailed error information
-        logging.error(f"Stripe session creation failed: {error_msg}")
-        
-        # Check for specific error types
-        if "secret_key_required" in error_msg:
-            logging.error("You need to use a secret key (sk_) for this operation, not a publishable key (pk_)")
-        
-        return None
+
 
 def generate_order_tracking(order):
     """

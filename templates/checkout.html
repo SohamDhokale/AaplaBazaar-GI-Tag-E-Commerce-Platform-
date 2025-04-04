@@ -76,9 +76,9 @@
                     </div>
                     
                     <div class="payment-info bg-light p-3 rounded mb-4">
-                        <h5 class="mb-3">Payment Information</h5>
-                        <p>You will be redirected to our secure payment gateway to complete your payment.</p>
-                        <p class="mb-0"><i class="fas fa-lock me-2"></i> Your payment information is secure and encrypted.</p>
+                        <h5 class="mb-3">Cash On Delivery Information</h5>
+                        <p>You will pay for your order when it is delivered to your address.</p>
+                        <p class="mb-0"><i class="fas fa-truck me-2"></i> SMS notifications will be sent to your registered phone number for order tracking.</p>
                     </div>
                     
                     <div class="d-grid">
@@ -111,6 +111,6 @@
 </section>
 
 {% block extra_js %}
-<script src="{{ url_for('static', filename='js/payment.js') }}"></script>
+
 {% endblock %}
 {% endblock %}

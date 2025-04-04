@@ -5,15 +5,11 @@ from flask import render_template, flash, redirect, url_for, request, jsonify, s
 from flask_login import login_user, logout_user, current_user, login_required
 from urllib.parse import urlparse
 from werkzeug.security import generate_password_hash
-import stripe
 
 from app import app, db
 from models import User, Product, Order, OrderItem, CartItem, WishlistItem, OrderTracking
 from forms import LoginForm, RegistrationForm, ProductForm, CheckoutForm
-from utils import send_sms_notification, create_payment_session, generate_order_tracking
-
-# Stripe configuration
-stripe.api_key = os.environ.get('STRIPE_SECRET_KEY', 'sk_test_your_stripe_key')
+from utils import send_sms_notification, generate_order_tracking
 
 # Home page
 @app.route('/')
@@ -323,8 +319,8 @@ def checkout():
             shipping_city=form.shipping_city.data,
             shipping_state=form.shipping_state.data,
             shipping_pincode=form.shipping_pincode.data,
-            status='Pending',
-            payment_status='Pending'
+            status='Processing',
+            payment_status='Pending'  # For Cash on Delivery
         )
         db.session.add(order)
         db.session.flush()  # Get the order ID
@@ -339,36 +335,41 @@ def checkout():
             )
             db.session.add(order_item)
         
-        # Save the order in the session for use after payment
-        session['order_id'] = order.id
+        # Generate a tracking number
+        order.tracking_number = f'AAPLA{order.id}{datetime.utcnow().strftime("%Y%m%d%H%M")}'
         
-        # Create Stripe checkout session
-        success_url = url_for('payment_success', _external=True)
-        cancel_url = url_for('payment_cancel', _external=True)
+        # Generate estimated delivery date and tracking updates
+        tracking_updates, estimated_delivery = generate_order_tracking(order)
+        order.estimated_delivery = estimated_delivery
         
-        # Add some logging
-        app.logger.info(f"Creating Stripe checkout session for order {order.id} with total amount {total}")
+        # Add tracking information
+        for update in tracking_updates:
+            tracking = OrderTracking(
+                order_id=order.id,
+                status=update['status'],
+                location=update['location'],
+                timestamp=update['timestamp'],
+                description=update['description']
+            )
+            db.session.add(tracking)
         
-        checkout_session = create_payment_session(cart_items, total, success_url, cancel_url)
+        # Clear the user's cart
+        CartItem.query.filter_by(user_id=current_user.id).delete()
         
-        if checkout_session:
-            # Update order with payment ID
-            order.payment_id = checkout_session.id
-            db.session.commit()
-            
-            app.logger.info(f"Redirecting to Stripe checkout: {checkout_session.url}")
-            # Redirect to Stripe checkout
-            return redirect(checkout_session.url)
+        # Commit all changes
+        db.session.commit()
+        
+        # Send SMS notification
+        message = f"Thank you for shopping with AaplaBazaar! Your order #{order.id} has been confirmed. Track your order with ID: {order.tracking_number}"
+        send_result = send_sms_notification(current_user.phone, message)
+        
+        if send_result:
+            app.logger.info(f"SMS notification sent successfully for order {order.id}")
         else:
-            app.logger.error("Failed to create Stripe checkout session")
-            
-            # Check if we have a publishable key issue
-            if os.environ.get('STRIPE_SECRET_KEY', '').startswith('pk_'):
-                flash('Payment processing error: Invalid API key configuration. Please contact the administrator.', 'danger')
-            else:
-                flash('Payment processing error. The payment gateway is currently unavailable. Please try again later or contact support.', 'danger')
-            
-            return redirect(url_for('checkout'))
+            app.logger.warning(f"Failed to send SMS notification for order {order.id}")
+        
+        flash('Your order has been placed successfully! You will receive an SMS with tracking details.', 'success')
+        return redirect(url_for('order_confirmation', order_id=order.id))
     
     return render_template('checkout.html', 
                            title='Checkout',
@@ -376,73 +377,7 @@ def checkout():
                            total=total,
                            form=form)
 
-@app.route('/payment/success')
-@login_required
-def payment_success():
-    # Get the order from the session
-    order_id = session.get('order_id')
-    if not order_id:
-        flash('No order information found.', 'danger')
-        return redirect(url_for('index'))
-    
-    order = Order.query.get_or_404(order_id)
-    
-    # Verify that the order belongs to the current user
-    if order.user_id != current_user.id:
-        abort(403)
-    
-    # Update order status
-    order.payment_status = 'Completed'
-    order.status = 'Processing'
-    
-    # Generate a tracking number
-    order.tracking_number = f'AAPLA{order.id}{datetime.utcnow().strftime("%Y%m%d%H%M")}'
-    
-    # Generate estimated delivery date (5-7 days from now)
-    tracking_updates, estimated_delivery = generate_order_tracking(order)
-    order.estimated_delivery = estimated_delivery
-    
-    # Add tracking information
-    for update in tracking_updates:
-        tracking = OrderTracking(
-            order_id=order.id,
-            status=update['status'],
-            location=update['location'],
-            timestamp=update['timestamp'],
-            description=update['description']
-        )
-        db.session.add(tracking)
-    
-    # Clear the user's cart
-    CartItem.query.filter_by(user_id=current_user.id).delete()
-    
-    db.session.commit()
-    
-    # Send SMS notification
-    message = f"Thank you for shopping with AaplaBazaar! Your order #{order.id} has been confirmed. Track your order with ID: {order.tracking_number}"
-    send_sms_notification(current_user.phone, message)
-    
-    # Clear the order from session
-    session.pop('order_id', None)
-    
-    flash('Payment successful! Your order has been placed.', 'success')
-    return redirect(url_for('order_confirmation', order_id=order.id))
 
-@app.route('/payment/cancel')
-@login_required
-def payment_cancel():
-    # Get the order from the session
-    order_id = session.get('order_id')
-    if order_id:
-        order = Order.query.get(order_id)
-        if order and order.user_id == current_user.id:
-            # Mark order as cancelled
-            order.status = 'Cancelled'
-            order.payment_status = 'Failed'
-            db.session.commit()
-    
-    flash('Payment was cancelled. Your order has not been placed.', 'warning')
-    return redirect(url_for('cart'))
 
 @app.route('/order/confirmation/<int:order_id>')
 @login_required
