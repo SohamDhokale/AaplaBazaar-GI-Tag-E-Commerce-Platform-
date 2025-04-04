@@ -346,6 +346,9 @@ def checkout():
         success_url = url_for('payment_success', _external=True)
         cancel_url = url_for('payment_cancel', _external=True)
         
+        # Add some logging
+        app.logger.info(f"Creating Stripe checkout session for order {order.id} with total amount {total}")
+        
         checkout_session = create_payment_session(cart_items, total, success_url, cancel_url)
         
         if checkout_session:
@@ -353,10 +356,12 @@ def checkout():
             order.payment_id = checkout_session.id
             db.session.commit()
             
+            app.logger.info(f"Redirecting to Stripe checkout: {checkout_session.url}")
             # Redirect to Stripe checkout
             return redirect(checkout_session.url)
         else:
-            flash('Payment processing error. Please try again.', 'danger')
+            app.logger.error("Failed to create Stripe checkout session")
+            flash('Payment processing error. The payment gateway is currently unavailable. Please try again later or contact support.', 'danger')
             return redirect(url_for('checkout'))
     
     return render_template('checkout.html', 

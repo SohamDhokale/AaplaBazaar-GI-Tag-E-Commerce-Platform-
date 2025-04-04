@@ -8,7 +8,11 @@ from twilio.rest import Client
 from flask import url_for
 
 # Configure Stripe
-stripe.api_key = os.environ.get('STRIPE_SECRET_KEY', 'sk_test_your_stripe_key')
+stripe.api_key = os.environ.get('STRIPE_SECRET_KEY')
+
+# Logging for debugging
+logging.basicConfig(level=logging.DEBUG)
+logging.info(f"Stripe API key configured: {stripe.api_key is not None}")
 
 # Twilio configuration
 TWILIO_ACCOUNT_SID = os.environ.get("TWILIO_ACCOUNT_SID", "your_twilio_sid")
@@ -42,8 +46,15 @@ def create_payment_session(products, total_amount, success_url, cancel_url):
     Create a Stripe checkout session
     """
     try:
+        # Log the Stripe secret key status
+        logging.info(f"Stripe API key configured: {stripe.api_key is not None}")
+        
         # Convert to paisa (Stripe uses smallest currency unit)
         amount_in_paisa = int(total_amount * 100)
+        
+        logging.info(f"Creating Stripe checkout session for amount: {amount_in_paisa} paisa")
+        logging.info(f"Success URL: {success_url}")
+        logging.info(f"Cancel URL: {cancel_url}")
         
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=['card'],
@@ -62,9 +73,16 @@ def create_payment_session(products, total_amount, success_url, cancel_url):
             success_url=success_url,
             cancel_url=cancel_url,
         )
+        
+        logging.info(f"Checkout session created successfully: {checkout_session.id}")
         return checkout_session
     except Exception as e:
-        logging.error(f"Stripe session creation failed: {str(e)}")
+        if hasattr(e, 'user_message'):
+            # Handle specific Stripe errors
+            logging.error(f"Stripe error: {e.user_message}")
+        else:
+            # Handle other errors
+            logging.error(f"Stripe session creation failed: {str(e)}")
         return None
 
 def generate_order_tracking(order):
