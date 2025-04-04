@@ -74,7 +74,7 @@ def get_image_urls(category, index=0):
     return main_image, second_image
 
 # List of products by category
-products = [
+product_data = [
     # Clothing Category
     {
         'name': 'Handwoven Cotton Saree',
@@ -83,9 +83,6 @@ products = [
         'discount_price': 1999.00,
         'stock': 50,
         'category': 'clothing',
-        'image_url1': 'https://images.unsplash.com/photo-1610189844977-2ed7a7a3b1e7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
-        'image_url2': 'https://images.unsplash.com/photo-1610189844990-08714fe90dbd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
-        'image_url3': None,
         'is_featured': True,
         'is_gi_tagged': True,
         'gi_tag_details': 'Handloom sarees from West Bengal with GI tag protection since 2007, known for their distinctive traditional designs and weaving techniques.',
@@ -98,9 +95,6 @@ products = [
         'discount_price': 999.00,
         'stock': 75,
         'category': 'clothing',
-        'image_url1': 'https://images.unsplash.com/photo-1598374211636-dcc979469a52',
-        'image_url2': None,
-        'image_url3': None,
         'is_featured': False,
         'is_gi_tagged': False,
         'gi_tag_details': None,
@@ -113,9 +107,6 @@ products = [
         'discount_price': 5499.00,
         'stock': 25,
         'category': 'clothing',
-        'image_url1': 'https://images.unsplash.com/photo-1575574835265-ba28c21c9c11',
-        'image_url2': None,
-        'image_url3': None,
         'is_featured': True,
         'is_gi_tagged': True,
         'gi_tag_details': 'Kashmir Pashmina received GI certification in 2008, protecting this centuries-old craft of creating shawls from fine Changthangi goat wool.',
@@ -130,9 +121,6 @@ products = [
         'discount_price': None,
         'stock': 15,
         'category': 'handicrafts',
-        'image_url1': 'https://images.unsplash.com/photo-1605883705077-8d3d75941642',
-        'image_url2': None,
-        'image_url3': None,
         'is_featured': True,
         'is_gi_tagged': True,
         'gi_tag_details': 'Bidri ware received GI tag protection in 2005, recognizing this 14th-century craft of creating metalware with silver inlay unique to Bidar, Karnataka.',
@@ -145,9 +133,6 @@ products = [
         'discount_price': 1699.00,
         'stock': 30,
         'category': 'handicrafts',
-        'image_url1': 'https://images.unsplash.com/photo-1607344645866-8d0c5d232faa',
-        'image_url2': None,
-        'image_url3': None,
         'is_featured': False,
         'is_gi_tagged': True,
         'gi_tag_details': 'Dhokra brass craft is a 4,000-year-old metal casting technique practiced by the Dhokra Damar tribes, granted GI tag protection in 2018.',
@@ -160,9 +145,6 @@ products = [
         'discount_price': 1999.00,
         'stock': 20,
         'category': 'handicrafts',
-        'image_url1': 'https://images.unsplash.com/photo-1594736797933-d0501ba2fe65',
-        'image_url2': None,
-        'image_url3': None,
         'is_featured': True,
         'is_gi_tagged': False,
         'gi_tag_details': None,
@@ -177,9 +159,6 @@ products = [
         'discount_price': 249.00,
         'stock': 100,
         'category': 'spices',
-        'image_url1': 'https://images.unsplash.com/photo-1579910801235-70d99a84d2d7',
-        'image_url2': None,
-        'image_url3': None,
         'is_featured': False,
         'is_gi_tagged': True,
         'gi_tag_details': 'Guntur Sannam Chilli received GI tag protection in 2019, recognizing its unique flavor profile and cultivation techniques specific to this region.',
@@ -192,9 +171,6 @@ products = [
         'discount_price': None,
         'stock': 30,
         'category': 'spices',
-        'image_url1': 'https://images.unsplash.com/photo-1599543255683-1fb265b4bf6e',
-        'image_url2': None,
-        'image_url3': None,
         'is_featured': True,
         'is_gi_tagged': True,
         'gi_tag_details': 'Kashmir Saffron received GI tag protection in 2020, recognizing its unique characteristics that come from the specific geography of Kashmir Valley.',
@@ -207,9 +183,6 @@ products = [
         'discount_price': 179.00,
         'stock': 150,
         'category': 'spices',
-        'image_url1': 'https://images.unsplash.com/photo-1615484527693-352542b57489',
-        'image_url2': None,
-        'image_url3': None,
         'is_featured': False,
         'is_gi_tagged': True,
         'gi_tag_details': 'Erode Turmeric received GI tag protection in 2019, known for its distinctive bright yellow color and high curcumin content.',
@@ -224,9 +197,6 @@ products = [
         'discount_price': 10999.00,
         'stock': 10,
         'category': 'jewelry',
-        'image_url1': 'https://images.unsplash.com/photo-1611652022419-a9419f74628c',
-        'image_url2': None,
-        'image_url3': None,
         'is_featured': True,
         'is_gi_tagged': False,
         'gi_tag_details': None,
@@ -239,9 +209,6 @@ products = [
         'discount_price': 1999.00,
         'stock': 25,
         'category': 'jewelry',
-        'image_url1': 'https://images.unsplash.com/photo-1630019852942-7a3592568ed0',
-        'image_url2': None,
-        'image_url3': None,
         'is_featured': False,
         'is_gi_tagged': False,
         'gi_tag_details': None,
@@ -254,9 +221,6 @@ products = [
         'discount_price': 1299.00,
         'stock': 30,
         'category': 'jewelry',
-        'image_url1': 'https://images.unsplash.com/photo-1611591437268-6cthb1b0270d',
-        'image_url2': None,
-        'image_url3': None,
         'is_featured': False,
         'is_gi_tagged': False,
         'gi_tag_details': None,
@@ -271,9 +235,6 @@ products = [
         'discount_price': 2999.00,
         'stock': 15,
         'category': 'home_decor',
-        'image_url1': 'https://images.unsplash.com/photo-1582210715397-aefea00b47ad',
-        'image_url2': None,
-        'image_url3': None,
         'is_featured': True,
         'is_gi_tagged': True,
         'gi_tag_details': 'Madhubani paintings received GI tag protection in 2007, recognizing this ancient folk art tradition from the Mithila region of Bihar.',
@@ -286,9 +247,6 @@ products = [
         'discount_price': None,
         'stock': 5,
         'category': 'home_decor',
-        'image_url1': 'https://images.unsplash.com/photo-1609235711761-77a852a45832',
-        'image_url2': None,
-        'image_url3': None,
         'is_featured': False,
         'is_gi_tagged': False,
         'gi_tag_details': None,
@@ -301,9 +259,6 @@ products = [
         'discount_price': 17999.00,
         'stock': 8,
         'category': 'home_decor',
-        'image_url1': 'https://images.unsplash.com/photo-1584286595840-e2a279ce9d28',
-        'image_url2': None,
-        'image_url3': None,
         'is_featured': True,
         'is_gi_tagged': True,
         'gi_tag_details': 'Kashmiri Carpets received GI tag protection in 2016, recognizing this centuries-old craft of hand-knotting intricate carpets using specific techniques unique to Kashmir.',
@@ -318,9 +273,6 @@ products = [
         'discount_price': 299.00,
         'stock': 50,
         'category': 'food_products',
-        'image_url1': 'https://images.unsplash.com/photo-1589217157232-464b505b197a',
-        'image_url2': None,
-        'image_url3': None,
         'is_featured': False,
         'is_gi_tagged': True,
         'gi_tag_details': 'Alphonso Mango from Ratnagiri, Maharashtra received GI tag protection in 2018, recognized for its unique taste, sweetness, and texture.',
@@ -333,9 +285,6 @@ products = [
         'discount_price': 1099.00,
         'stock': 30,
         'category': 'food_products',
-        'image_url1': 'https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9',
-        'image_url2': None,
-        'image_url3': None,
         'is_featured': True,
         'is_gi_tagged': True,
         'gi_tag_details': 'Darjeeling Tea was the first Indian product to receive GI tag protection in 2004, known worldwide as the "Champagne of Teas".',
@@ -348,9 +297,6 @@ products = [
         'discount_price': 199.00,
         'stock': 75,
         'category': 'food_products',
-        'image_url1': 'https://images.unsplash.com/photo-1586698990195-7d14235fcdf5',
-        'image_url2': None,
-        'image_url3': None,
         'is_featured': False,
         'is_gi_tagged': False,
         'gi_tag_details': None,
@@ -365,9 +311,6 @@ products = [
         'discount_price': 199.00,
         'stock': 100,
         'category': 'beauty',
-        'image_url1': 'https://images.unsplash.com/photo-1612886951223-d94a06c704ef',
-        'image_url2': None,
-        'image_url3': None,
         'is_featured': False,
         'is_gi_tagged': True,
         'gi_tag_details': 'Mysore Sandalwood Oil received GI tag protection in 2005, known for its distinctive fragrance and therapeutic properties.',
@@ -380,9 +323,6 @@ products = [
         'discount_price': 399.00,
         'stock': 60,
         'category': 'beauty',
-        'image_url1': 'https://images.unsplash.com/photo-1608248597279-f99d160beba3',
-        'image_url2': None,
-        'image_url3': None,
         'is_featured': True,
         'is_gi_tagged': False,
         'gi_tag_details': None,
@@ -395,9 +335,6 @@ products = [
         'discount_price': 599.00,
         'stock': 40,
         'category': 'beauty',
-        'image_url1': 'https://images.unsplash.com/photo-1608613304903-80f2b2df685b',
-        'image_url2': None,
-        'image_url3': None,
         'is_featured': False,
         'is_gi_tagged': False,
         'gi_tag_details': None,
@@ -412,148 +349,132 @@ products = [
         'discount_price': 1599.00,
         'stock': 25,
         'category': 'accessories',
-        'image_url1': 'https://images.unsplash.com/photo-1591910849983-3b57a8f9954d',
-        'image_url2': None,
-        'image_url3': None,
         'is_featured': True,
         'is_gi_tagged': True,
-        'gi_tag_details': 'Banarasi brocades and sarees received GI tag protection in 2009, known for their gold and silver zari work and intricate designs.',
+        'gi_tag_details': 'Banarasi Brocade received GI tag protection in 2009, protecting this 500-year-old weaving tradition from Varanasi.',
         'origin': 'Uttar Pradesh'
     },
     {
-        'name': 'Kolhapuri Leather Sandals',
-        'description': 'Authentic Kolhapuri chappal handcrafted by traditional artisans from Kolhapur. Made with vegetable-tanned leather using techniques passed down through generations. Available in multiple sizes.',
-        'price': 1299.00,
-        'discount_price': 999.00,
+        'name': 'Kolhapuri Leather Chappal',
+        'description': 'Authentic handcrafted Kolhapuri leather chappals (sandals) from Maharashtra. Made with vegetable-tanned leather using traditional techniques. Known for durability and distinctive style.',
+        'price': 999.00,
+        'discount_price': 849.00,
         'stock': 40,
         'category': 'accessories',
-        'image_url1': 'https://images.unsplash.com/photo-1591910180595-5ac96efab27c',
-        'image_url2': None,
-        'image_url3': None,
         'is_featured': False,
         'is_gi_tagged': True,
-        'gi_tag_details': 'Kolhapuri Chappal received GI tag protection in 2019, recognizing this 800-year-old handcrafting tradition native to Kolhapur, Maharashtra.',
+        'gi_tag_details': 'Kolhapuri Chappal received GI tag protection in 2019, recognizing the unique leather crafting techniques specific to the Kolhapur region.',
         'origin': 'Maharashtra'
     },
     {
-        'name': 'Ikat Cotton Tote Bag',
-        'description': 'Handwoven cotton tote bag featuring traditional Pochampally Ikat patterns. Each piece is hand-dyed and woven by skilled artisans in Telangana. Fair trade and sustainable. Size: 14" x 16".',
-        'price': 799.00,
-        'discount_price': 699.00,
-        'stock': 70,
+        'name': 'Chanderi Silk Stole',
+        'description': 'Lightweight Chanderi silk stole with traditional zari border and small bootis. Handwoven in Chanderi, Madhya Pradesh, this stole blends silk and cotton for a beautiful drape. Size: 2m x 0.5m.',
+        'price': 899.00,
+        'discount_price': 799.00,
+        'stock': 60,
         'category': 'accessories',
-        'image_url1': 'https://images.unsplash.com/photo-1589221962236-7aab841d5f4e',
-        'image_url2': None,
-        'image_url3': None,
         'is_featured': False,
         'is_gi_tagged': True,
-        'gi_tag_details': 'Pochampally Ikat received GI tag protection in 2005, known for its geometric patterns created through the distinctive resist-dyeing technique.',
-        'origin': 'Telangana'
+        'gi_tag_details': 'Chanderi Fabric received GI tag protection in 2005, protecting this traditional weaving technique that dates back to the Vedic period.',
+        'origin': 'Madhya Pradesh'
     },
     
     # Books Category
     {
-        'name': 'The Art of Indian Textiles',
-        'description': 'Comprehensive hardcover book exploring the rich tradition of Indian textiles across different regions. Features 200+ color photographs, detailed historical context, and artisan interviews. 256 pages.',
-        'price': 1999.00,
-        'discount_price': 1799.00,
+        'name': 'Illustrated History of Indian Art',
+        'description': 'Comprehensive hardcover book documenting the evolution of Indian art from ancient cave paintings to contemporary works. Features 300+ color illustrations and expert commentary. 350 pages.',
+        'price': 2499.00,
+        'discount_price': 2199.00,
         'stock': 20,
         'category': 'books',
-        'image_url1': 'https://images.unsplash.com/photo-1544947950-fa07a98d237f',
-        'image_url2': None,
-        'image_url3': None,
-        'is_featured': False,
+        'is_featured': True,
         'is_gi_tagged': False,
         'gi_tag_details': None,
         'origin': 'Delhi'
     },
     {
-        'name': 'Traditional Indian Cooking',
-        'description': 'Award-winning cookbook featuring 150+ authentic recipes from various Indian regions, along with cultural context and cooking techniques. Includes vegetarian, non-vegetarian, and vegan options.',
-        'price': 1499.00,
-        'discount_price': 1299.00,
+        'name': 'Traditional Indian Recipes',
+        'description': 'Collection of authentic regional recipes from across India, passed down through generations. Includes detailed cooking techniques, ingredient substitutions, and cultural context. 250 recipes, 400 pages.',
+        'price': 1299.00,
+        'discount_price': 1099.00,
         'stock': 35,
         'category': 'books',
-        'image_url1': 'https://images.unsplash.com/photo-1589998059171-988d887df646',
-        'image_url2': None,
-        'image_url3': None,
-        'is_featured': True,
+        'is_featured': False,
         'is_gi_tagged': False,
         'gi_tag_details': None,
         'origin': 'Mumbai'
     },
     {
-        'name': 'Illustrated History of Indian Art',
-        'description': 'Scholarly yet accessible guide to 5000 years of Indian art history, from ancient cave paintings to contemporary works. Features timelines, artist profiles, and cultural context. 320 pages with full-color illustrations.',
-        'price': 2499.00,
-        'discount_price': 2199.00,
+        'name': 'Crafts of India: A Photographic Journey',
+        'description': 'Award-winning coffee table book showcasing India\'s diverse craft traditions through stunning photography. Features artisan stories, historical context, and regional techniques. 200 pages, hardcover.',
+        'price': 2999.00,
+        'discount_price': 2699.00,
         'stock': 15,
         'category': 'books',
-        'image_url1': 'https://images.unsplash.com/photo-1532068306628-96963a635ba9',
-        'image_url2': None,
-        'image_url3': None,
         'is_featured': False,
         'is_gi_tagged': False,
         'gi_tag_details': None,
-        'origin': 'Chennai'
+        'origin': 'Bengaluru'
     },
     
     # Electronics Category
     {
+        'name': 'Smart Yoga Mat',
+        'description': 'Innovative yoga mat with embedded sensors to track posture, balance, and movement. Connects to mobile app for real-time feedback and guided sessions. Made with eco-friendly materials. Size: 72" x 24".',
+        'price': 5999.00,
+        'discount_price': 4999.00,
+        'stock': 20,
+        'category': 'electronics',
+        'is_featured': True,
+        'is_gi_tagged': False,
+        'gi_tag_details': None,
+        'origin': 'Bengaluru'
+    },
+    {
         'name': 'Digital Tanpura',
-        'description': 'Electronic tanpura featuring authentic sound samples recorded from a professional acoustic tanpura. Offers 4 strings, adjustable pitch and volume, and rechargeable battery that lasts 12+ hours.',
-        'price': 4999.00,
-        'discount_price': 4499.00,
+        'description': 'Electronic tanpura with authentic sound reproduction for classical Indian music practice. Features 4 strings, multiple tuning options, and 24-hour battery life. Compact and portable design.',
+        'price': 3499.00,
+        'discount_price': 3199.00,
         'stock': 15,
         'category': 'electronics',
-        'image_url1': 'https://images.unsplash.com/photo-1589491106922-a8e488c4206f',
-        'image_url2': None,
-        'image_url3': None,
-        'is_featured': True,
+        'is_featured': False,
         'is_gi_tagged': False,
         'gi_tag_details': None,
         'origin': 'Pune'
     },
     {
-        'name': 'Smart Pressure Cooker',
-        'description': 'Modern smart pressure cooker designed specifically for Indian cooking. Features 12 preset programs for dishes like biryani, dal, and curry. App-connected with timer and pressure monitoring.',
-        'price': 5999.00,
-        'discount_price': 4999.00,
+        'name': 'Solar Spice Grinder',
+        'description': 'Eco-friendly solar-powered spice grinder perfect for Indian kitchens. Features ceramic grinding mechanism, adjustable coarseness, and backup battery. Ideal for fresh masalas and spice blends.',
+        'price': 1299.00,
+        'discount_price': 1099.00,
         'stock': 25,
         'category': 'electronics',
-        'image_url1': 'https://images.unsplash.com/photo-1585664156547-779321ff40be',
-        'image_url2': None,
-        'image_url3': None,
         'is_featured': False,
         'is_gi_tagged': False,
         'gi_tag_details': None,
-        'origin': 'Bangalore'
-    },
-    {
-        'name': 'Bamboo Phone Amplifier',
-        'description': 'Eco-friendly phone amplifier handcrafted from sustainable bamboo. Naturally amplifies sound without electricity. Designed and crafted by tribal artisans from the Northeast using traditional techniques.',
-        'price': 899.00,
-        'discount_price': 799.00,
-        'stock': 40,
-        'category': 'electronics',
-        'image_url1': 'https://images.unsplash.com/photo-1588957802836-e64c34761959',
-        'image_url2': None,
-        'image_url3': None,
-        'is_featured': False,
-        'is_gi_tagged': False,
-        'gi_tag_details': None,
-        'origin': 'Assam'
+        'origin': 'Chennai'
     }
 ]
 
-# Add all products
+# Adding image URLs to products using our function
+products = []
+for i, product in enumerate(product_data):
+    category = product['category']
+    main_img, second_img = get_image_urls(category, i % 3)  # Use i%3 to cycle through the 3 images for each category
+    
+    # Create copy of the product data with images
+    product_with_images = product.copy()
+    product_with_images['image_url1'] = main_img
+    product_with_images['image_url2'] = second_img
+    product_with_images['image_url3'] = None
+    
+    products.append(product_with_images)
+
+# Create the products in the database
 with app.app_context():
-    # Check if products table is empty
-    if Product.query.count() == 0:
-        for product_data in products:
-            product = Product(**product_data)
-            db.session.add(product)
-        db.session.commit()
-        print(f"Added {len(products)} products to the database.")
-    else:
-        print("Products already exist in the database.")
+    for product_data in products:
+        product = Product(**product_data)
+        db.session.add(product)
+    
+    db.session.commit()
+    print(f"Added {len(products)} products to the database.")
