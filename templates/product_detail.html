@@ -142,6 +142,147 @@
                 <div class="tab-pane fade show active" id="description" role="tabpanel">
                     {{ product.description|safe }}
                 </div>
+                <div class="tab-pane fade" id="reviews" role="tabpanel">
+                    <div class="reviews-section">
+                        <div class="reviews-overview">
+                            <div class="rating-summary text-center me-4">
+                                {% if reviews %}
+                                    {% set avg_rating = (reviews|sum(attribute='rating') / reviews|length)|round(1) %}
+                                    <div class="avg-rating">{{ avg_rating }}</div>
+                                    <div class="stars">
+                                        {% for i in range(5) %}
+                                            {% if i < avg_rating|int %}
+                                                <i class="fas fa-star"></i>
+                                            {% elif i < avg_rating|round(0, 'ceil')|int and (avg_rating % 1) >= 0.5 %}
+                                                <i class="fas fa-star-half-alt"></i>
+                                            {% else %}
+                                                <i class="far fa-star"></i>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                    <div class="review-count">{{ reviews|length }} review{% if reviews|length != 1 %}s{% endif %}</div>
+                                {% else %}
+                                    <div class="avg-rating">0.0</div>
+                                    <div class="stars">
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <div class="review-count">No reviews yet</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        {% if current_user.is_authenticated %}
+                            {% set user_review = current_user.reviews|selectattr('product_id', 'equalto', product.id)|first %}
+                            {% if user_review %}
+                                <div class="alert alert-info mb-4">
+                                    You've already reviewed this product. You can edit your review below.
+                                </div>
+                            {% else %}
+                                <div class="review-form">
+                                    <h4>Write a Review</h4>
+                                    <form action="{{ url_for('product_detail', id=product.id) }}" method="post">
+                                        {{ form.hidden_tag() }}
+                                        <div class="mb-3">
+                                            {{ form.rating.label(class="form-label") }}
+                                            {{ form.rating(class="form-select") }}
+                                            {% if form.rating.errors %}
+                                                <div class="text-danger">
+                                                    {% for error in form.rating.errors %}
+                                                        {{ error }}
+                                                    {% endfor %}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="mb-3">
+                                            {{ form.title.label(class="form-label") }}
+                                            {{ form.title(class="form-control") }}
+                                            {% if form.title.errors %}
+                                                <div class="text-danger">
+                                                    {% for error in form.title.errors %}
+                                                        {{ error }}
+                                                    {% endfor %}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="mb-3">
+                                            {{ form.comment.label(class="form-label") }}
+                                            {{ form.comment(class="form-control", rows=4) }}
+                                            {% if form.comment.errors %}
+                                                <div class="text-danger">
+                                                    {% for error in form.comment.errors %}
+                                                        {{ error }}
+                                                    {% endfor %}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        <div>
+                                            {{ form.submit(class="btn btn-primary") }}
+                                        </div>
+                                    </form>
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            <div class="alert alert-secondary mb-4">
+                                <p class="mb-0">Please <a href="{{ url_for('login') }}">log in</a> to leave a review.</p>
+                            </div>
+                        {% endif %}
+
+                        <div class="review-list">
+                            <h4>Customer Reviews</h4>
+                            {% if reviews %}
+                                {% for review in reviews %}
+                                    <div class="review-item card mb-3">
+                                        <div class="card-body">
+                                            <div class="review-rating">
+                                                {% for i in range(5) %}
+                                                    {% if i < review.rating %}
+                                                        <i class="fas fa-star"></i>
+                                                    {% else %}
+                                                        <i class="far fa-star"></i>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                            {% if review.title %}
+                                                <h5 class="review-title">{{ review.title }}</h5>
+                                            {% endif %}
+                                            <div class="review-meta text-muted">
+                                                <span>By {{ review.user.username }}</span> | 
+                                                <span>{{ review.created_at.strftime('%B %d, %Y') }}</span>
+                                            </div>
+                                            {% if review.comment %}
+                                                <div class="review-content mt-2">
+                                                    <p>{{ review.comment }}</p>
+                                                </div>
+                                            {% endif %}
+                                            {% if current_user.is_authenticated and (current_user.id == review.user_id or current_user.is_admin) %}
+                                                <div class="review-actions mt-2">
+                                                    <form action="{{ url_for('delete_review', review_id=review.id) }}" method="post" class="d-inline">
+                                                        <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete this review?')">
+                                                            <i class="fas fa-trash"></i> Delete
+                                                        </button>
+                                                    </form>
+                                                    {% if current_user.id == review.user_id %}
+                                                        <a href="{{ url_for('product_detail', id=product.id) }}#reviews" class="btn btn-sm btn-outline-primary">
+                                                            <i class="fas fa-edit"></i> Edit
+                                                        </a>
+                                                    {% endif %}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <div class="alert alert-secondary">
+                                    <p class="mb-0">There are no reviews yet. Be the first to review this product!</p>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
                 <div class="tab-pane fade" id="shipping" role="tabpanel">
                     <h4>Shipping Policy</h4>
                     <p>We offer free shipping on orders above ₹599. Standard delivery takes 3-7 business days depending on your location.</p>

@@ -406,10 +406,12 @@ def checkout():
         
         if send_result:
             app.logger.info(f"SMS notification sent successfully for order {order.id}")
+            flash('Your order has been placed successfully! You will receive an SMS with tracking details.', 'success')
         else:
             app.logger.warning(f"Failed to send SMS notification for order {order.id}")
+            # Provide user-friendly message about SMS issue
+            flash('Your order has been placed successfully! SMS notification could not be sent due to Twilio trial account limitations. With trial accounts, you can only send SMS to verified phone numbers.', 'info')
         
-        flash('Your order has been placed successfully! You will receive an SMS with tracking details.', 'success')
         return redirect(url_for('order_confirmation', order_id=order.id))
     
     return render_template('checkout.html', 
@@ -729,9 +731,14 @@ def admin_update_order(order_id):
         # Send SMS notification
         user = User.query.get(order.user_id)
         message = f"AaplaBazaar Update: Your order #{order.id} status has been updated to {status}. Track your order with ID: {order.tracking_number}"
-        send_sms_notification(user.phone, message)
+        send_result = send_sms_notification(user.phone, message)
         
-        flash(f'Order status updated to {status}!', 'success')
+        if send_result:
+            app.logger.info(f"SMS notification sent successfully for order status update {order.id}")
+            flash(f'Order status updated to {status}! SMS notification sent.', 'success')
+        else:
+            app.logger.warning(f"Failed to send SMS notification for order status update {order.id}")
+            flash(f'Order status updated to {status}! SMS notification could not be sent.', 'info')
     
     return redirect(url_for('admin_order_detail', order_id=order.id))
 
