@@ -70,6 +70,32 @@
                         <span class="original-price">₹{{ product.discount_price }}</span>
                         {% endif %}
                     </div>
+                    <div class="product-stock">
+                        {% if product.stock > 0 %}
+                        <span class="stock-info {% if product.stock <= 10 %}stock-low{% endif %}">
+                            {% if product.stock <= 10 %}
+                            <i class="fas fa-exclamation-circle"></i> Only {{ product.stock }} left
+                            {% else %}
+                            <i class="fas fa-check-circle"></i> In Stock ({{ product.stock }})
+                            {% endif %}
+                        </span>
+                        {% else %}
+                        <span class="stock-info stock-out"><i class="fas fa-times-circle"></i> Out of Stock</span>
+                        {% endif %}
+                    </div>
+                    <div class="product-stock">
+                        {% if product.stock > 0 %}
+                        <span class="stock-info {% if product.stock <= 10 %}stock-low{% endif %}">
+                            {% if product.stock <= 10 %}
+                            <i class="fas fa-exclamation-circle"></i> Only {{ product.stock }} left
+                            {% else %}
+                            <i class="fas fa-check-circle"></i> In Stock ({{ product.stock }})
+                            {% endif %}
+                        </span>
+                        {% else %}
+                        <span class="stock-info stock-out"><i class="fas fa-times-circle"></i> Out of Stock</span>
+                        {% endif %}
+                    </div>
                     <div class="product-actions">
                         {% if current_user.is_authenticated %}
                         <form class="add-to-cart-form" action="{{ url_for('add_to_cart', product_id=product.id) }}" method="post">
