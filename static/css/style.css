@@ -349,52 +349,6 @@ a:hover {
     font-size: 0.9rem;
 }
 
-.product-stock {
-    margin-bottom: 0.75rem;
-    font-size: 0.85rem;
-}
-
-.stock-info {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-}
-
-.stock-info i {
-    margin-right: 0.3rem;
-}
-
-.stock-info.stock-low {
-    color: var(--warning-color);
-}
-
-.stock-info.stock-out {
-    color: var(--danger-color);
-}
-
-.product-stock {
-    margin-bottom: 0.75rem;
-    font-size: 0.85rem;
-}
-
-.stock-info {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-}
-
-.stock-info i {
-    margin-right: 0.3rem;
-}
-
-.stock-info.stock-low {
-    color: var(--warning-color);
-}
-
-.stock-info.stock-out {
-    color: var(--danger-color);
-}
-
 .product-actions {
     display: flex;
     justify-content: space-between;
