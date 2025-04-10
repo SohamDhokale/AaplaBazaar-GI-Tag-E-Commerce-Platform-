@@ -354,6 +354,16 @@ a:hover {
     justify-content: space-between;
 }
 
+.price-filter input[type="number"] {
+    width: 100px;
+}
+
+.price-filter {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
 .add-to-cart {
     width: 100%;
 }

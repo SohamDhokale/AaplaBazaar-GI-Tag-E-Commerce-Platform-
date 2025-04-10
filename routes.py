@@ -93,6 +93,10 @@ def products():
     # Base query
     query = Product.query
     
+    # Get price range filters
+    min_price = request.args.get('min_price', type=float)
+    max_price = request.args.get('max_price', type=float)
+    
     # Apply filters
     if category and category != 'all':
         query = query.filter_by(category=category)
@@ -100,6 +104,12 @@ def products():
     if search:
         query = query.filter(Product.name.ilike(f'%{search}%') | 
                              Product.description.ilike(f'%{search}%'))
+    
+    # Apply price range filter
+    if min_price is not None:
+        query = query.filter(Product.price >= min_price)
+    if max_price is not None:
+        query = query.filter(Product.price <= max_price)
     
     # Apply sorting
     if sort == 'price_low':
