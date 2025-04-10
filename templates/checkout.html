@@ -65,6 +65,38 @@
                         </div>
                     </div>
                     
+                    <h3 class="mt-4 mb-3">Delivery Options</h3>
+                    
+                    <div class="form-group mb-4">
+                        {{ form.scheduled_date.label(class="form-label") }}
+                        {{ form.scheduled_date(class="form-control datepicker", type="date") }}
+                        <small class="text-muted">Select a date if you want to schedule this delivery</small>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        {{ form.schedule_note.label(class="form-label") }}
+                        {{ form.schedule_note(class="form-control", placeholder="e.g. Birthday, Anniversary") }}
+                    </div>
+
+                    <h3 class="mt-4 mb-3">Gift Options</h3>
+                    
+                    <div class="form-check mb-3">
+                        {{ form.is_gift(class="form-check-input") }}
+                        {{ form.is_gift.label(class="form-check-label") }}
+                    </div>
+
+                    <div id="giftOptions" style="display: none;">
+                        <div class="form-group mb-3">
+                            {{ form.gift_wrap_type.label(class="form-label") }}
+                            {{ form.gift_wrap_type(class="form-select") }}
+                        </div>
+
+                        <div class="form-group mb-4">
+                            {{ form.gift_message.label(class="form-label") }}
+                            {{ form.gift_message(class="form-control", rows=3, placeholder="Enter your gift message here") }}
+                        </div>
+                    </div>
+
                     <h3 class="mt-4 mb-3">Payment Method</h3>
                     
                     <div class="form-group mb-4">

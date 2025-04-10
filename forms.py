@@ -65,6 +65,23 @@ class CheckoutForm(FlaskForm):
     shipping_state = StringField('State', validators=[DataRequired()])
     shipping_pincode = StringField('PIN Code', validators=[DataRequired(), Length(min=6, max=10)])
     payment_method = SelectField('Payment Method', choices=[('cod', 'Cash On Delivery')], validators=[DataRequired()])
+    
+    # Scheduling fields
+    scheduled_date = StringField('Schedule Delivery Date', validators=[Optional()])
+    schedule_note = StringField('Special Occasion (Optional)', validators=[Optional(), Length(max=256)])
+    
+    # Gift wrapping fields
+    is_gift = BooleanField('This is a Gift')
+    gift_wrap_type = SelectField('Gift Wrap Style', 
+                                choices=[
+                                    ('', 'No Gift Wrap'),
+                                    ('basic', 'Basic Wrap (₹50)'),
+                                    ('premium', 'Premium Wrap with Bow (₹100)'),
+                                    ('luxury', 'Luxury Gift Box (₹200)')
+                                ], 
+                                validators=[Optional()])
+    gift_message = TextAreaField('Gift Message', validators=[Optional(), Length(max=500)])
+    
     submit = SubmitField('Place Order')
 
 class ReviewForm(FlaskForm):

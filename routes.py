@@ -353,15 +353,29 @@ def checkout():
     
     if form.validate_on_submit():
         # Create the order
+        # Calculate total with gift wrap cost
+        gift_wrap_costs = {
+            'basic': 50,
+            'premium': 100,
+            'luxury': 200
+        }
+        gift_wrap_cost = gift_wrap_costs.get(form.gift_wrap_type.data, 0) if form.is_gift.data else 0
+        final_total = total + gift_wrap_cost
+
         order = Order(
             user_id=current_user.id,
-            total_amount=total,
+            total_amount=final_total,
             shipping_address=form.shipping_address.data,
             shipping_city=form.shipping_city.data,
             shipping_state=form.shipping_state.data,
             shipping_pincode=form.shipping_pincode.data,
             status='Processing',
-            payment_status='Pending'  # For Cash on Delivery
+            payment_status='Pending',  # For Cash on Delivery
+            scheduled_date=datetime.strptime(form.scheduled_date.data, '%Y-%m-%d') if form.scheduled_date.data else None,
+            schedule_note=form.schedule_note.data,
+            is_gift=form.is_gift.data,
+            gift_wrap_type=form.gift_wrap_type.data if form.is_gift.data else None,
+            gift_message=form.gift_message.data if form.is_gift.data else None
         )
         db.session.add(order)
         db.session.flush()  # Get the order ID
