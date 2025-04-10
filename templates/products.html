@@ -70,6 +70,15 @@
                         <span class="original-price">₹{{ product.discount_price }}</span>
                         {% endif %}
                     </div>
+                    <div class="product-stock mb-2">
+                        {% if product.stock > 10 %}
+                        <span class="badge bg-success">In Stock</span>
+                        {% elif product.stock > 0 %}
+                        <span class="badge bg-warning text-dark">Only {{ product.stock }} left</span>
+                        {% else %}
+                        <span class="badge bg-danger">Out of Stock</span>
+                        {% endif %}
+                    </div>
                     <div class="product-actions">
                         {% if current_user.is_authenticated %}
                         <form class="add-to-cart-form" action="{{ url_for('add_to_cart', product_id=product.id) }}" method="post">

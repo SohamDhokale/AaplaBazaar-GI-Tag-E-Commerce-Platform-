@@ -706,6 +706,16 @@ a:hover {
     margin-bottom: 1.5rem;
 }
 
+.product-stock {
+    display: flex;
+    align-items: center;
+}
+
+.product-stock .badge {
+    font-size: 0.875rem;
+    padding: 0.35rem 0.65rem;
+}
+
 .product-info-quantity {
     display: flex;
     align-items: center;
