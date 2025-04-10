@@ -6,54 +6,54 @@ def get_image_urls(category, index=0):
     # Base URLs for Pinterest image links
     base_urls = {
         'clothing': [
-            'https://i.pinimg.com/564x/85/6c/62/856c62a709e0c78c9d30f56c96d5f142.jpg',  # Saree
-            'https://i.pinimg.com/564x/98/25/0d/98250d035550b57b2d9dd800f0ff3c84.jpg',  # Kurta
-            'https://i.pinimg.com/564x/78/83/cb/7883cb3ea33b71b8a8f8d73255282b0a.jpg',  # Pashmina
+            'https://www.parijatstore.com/cdn/shop/files/DSC06006_Custom_1946x.jpg?v=1719495192',  # Saree
+            'https://cdn.shopify.com/s/files/1/0583/3221/7421/files/Exploring_Different_Types_of_Men_s_Kurta_Designs_and_How_to_Choose_the_Best_One_2048x2048.png?v=1712751463',  # Kurta
+            'https://media.istockphoto.com/id/1473244576/photo/kashmiri-shawl-in-making.jpg?s=612x612&w=0&k=20&c=i38rszw4wlWhXuxesx8846ZTiPmEZCUK-RNhdjGbWrM=',  # Pashmina
         ],
         'handicrafts': [
-            'https://i.pinimg.com/564x/d8/7c/ca/d87cca88c576a7c868754ef9853ed307.jpg',  # Vase
-            'https://i.pinimg.com/564x/5b/75/4d/5b754d72f20b8d53b5c2dd71a43bf2d9.jpg',  # Brass figurine
-            'https://i.pinimg.com/564x/e3/25/99/e32599e6a06c1a1f04a7a184f89df2c9.jpg'   # Blue pottery
+            'https://d35l77wxi0xou3.cloudfront.net/collab/craft1582795978Bidri-Banner.jpg',  # Vase
+            'https://hindikrafts.com/wp-content/uploads/2020/08/dhokra_art.jpg',  # Brass figurine
+            'https://miro.medium.com/v2/resize:fit:1400/0*se58hVwWoWYAxl-n'   # Blue pottery
         ],
         'spices': [
-            'https://i.pinimg.com/564x/dd/ee/9a/ddee9a5f1a1e987e4c3d9c86008eedcd.jpg',  # Chilli
-            'https://i.pinimg.com/564x/78/22/ee/7822eeafde78a2c0f70aec6b31ea0ed6.jpg',  # Saffron
-            'https://i.pinimg.com/564x/6a/ff/ce/6affce0ccda6eef3717de52dcf7399eb.jpg'   # Turmeric
+            'https://d4pmlgzenkweq.cloudfront.net/rbivs6ia732gi2fxgyd2o9xo7erd',  # Chilli
+            'https://m.media-amazon.com/images/I/61ADFHP+g3L._AC_UF1000,1000_QL80_.jpg',  # Saffron
+            'https://www.greendna.in/cdn/shop/products/turmeric-1-1030x687.jpg?v=1562518343'   # Turmeric
         ],
         'jewelry': [
-            'https://i.pinimg.com/564x/94/89/41/948941d8e40c64c0bbaa9f8da9526731.jpg',  # Kundan set
-            'https://i.pinimg.com/564x/6a/06/97/6a06971be92a47ccc8de9fb9d5e97f64.jpg',  # Temple jewelry
-            'https://i.pinimg.com/564x/de/c8/5c/dec85c8b5f2d36ad75a470747c824c9f.jpg'   # Bangles
+            'https://josya.in/wp-content/uploads/2024/10/IMG-20240311-WA03945.jpg',  # Kundan set
+            'https://i.pinimg.com/736x/a0/d1/f9/a0d1f9b2199207ea2f6b82ad8857bea0.jpg',  # Temple jewelry
+            'https://silkthreadmaterials.com/wp-content/uploads/2018/02/WhatsApp-Image-2018-02-04-at-18.19.35.jpeg'   # Bangles
         ],
         'home_decor': [
-            'https://i.pinimg.com/564x/7c/70/3e/7c703e4d994fc5451c2ddf37e23c8034.jpg',  # Madhubani
-            'https://i.pinimg.com/564x/a7/eb/8e/a7eb8e61ebce3ad80b9507d13d72cbab.jpg',  # Wooden pillars
-            'https://i.pinimg.com/564x/a3/de/c1/a3dec12a0fc0eb3c1b7223dea9da9ed7.jpg'   # Carpet
+            'https://t3.ftcdn.net/jpg/05/03/51/98/360_F_503519804_HcEEF0oALIflYCKpOdAoxKNXJeIoaxtX.jpg',  # Madhubani
+            'https://www.dwoodchettinadpillars.com/images/image-5.jpg',  # Wooden pillars
+            'https://kashmironline.net/wp-content/uploads/2017/01/carpets-1.jpg'   # Carpet
         ],
         'food_products': [
-            'https://i.pinimg.com/564x/97/fd/8e/97fd8e8e83b7ea1dc0b4d422bfa0a106.jpg',  # Pickle
-            'https://i.pinimg.com/564x/71/23/ab/7123ab85318c8c063e28c4f4d8c3fcb7.jpg',  # Tea
-            'https://i.pinimg.com/564x/18/9b/c9/189bc9ebed1c79e4fce72f85f0b4bf30.jpg'   # Jaggery
+            'https://www.jiomart.com/images/product/original/rvbjetjtqs/grannery-mango-pickle-500gm-aam-achaar-ramkela-alphonso-mango-product-images-orvbjetjtqs-p596152100-0-202212072035.png?im=Resize=(1000,1000)',  # Pickle
+            'https://m.media-amazon.com/images/I/81w0oUlSL5L._SX679_.jpg',  # Tea
+            'https://gogoanow.com/wp-content/uploads/2017/12/palm-sugar-coconut-sugar.jpg'   # Jaggery
         ],
         'beauty': [
-            'https://i.pinimg.com/564x/4c/09/78/4c09784f73ed3a8fb88c0e472c4db636.jpg',  # Sandalwood soap
-            'https://i.pinimg.com/564x/92/18/27/92182717d69a1c9c31c4a671dc6e6100.jpg',  # Hair oil
-            'https://i.pinimg.com/564x/a3/14/07/a3140733e88d33c1b059e1976f9a654c.jpg'   # Face mask
+            'https://m.media-amazon.com/images/I/71DublkdqFL.jpg',  # Sandalwood soap
+            'https://www.emamiltd.in/wp-content/themes/emami/images/keshking_collarge.png',  # Hair oil
+            'https://www.bigbasket.com/media/uploads/flatpages/pd/40299065-02.png'   # Face mask
         ],
         'accessories': [
-            'https://i.pinimg.com/564x/07/c4/e7/07c4e7ae0ec04e9ae47a88d933e3bb27.jpg',  # Clutch
-            'https://i.pinimg.com/564x/79/da/a5/79daa5e5a987be8c53e30efd6bb045cd.jpg',  # Kolhapuri
-            'https://i.pinimg.com/564x/61/22/7c/61227c6ea5b9cf04d0e0f9c35cb2b7a5.jpg'   # Stole
+            'https://m.media-amazon.com/images/I/91OHDpRoMlL._AC_UY1000_.jpg',  # Clutch
+            'https://m.media-amazon.com/images/I/71UB9UZ5QxL._AC_UY1000_.jpg',  # Kolhapuri
+            'https://shop.gaatha.com/image/cache/catalog/Samoolam/20_05_2024/A-Symphony-in-Color-Hand-Knitted-Crochet-Chanderi-Stole-G-845x435.jpg'   # Stole
         ],
         'books': [
-            'https://i.pinimg.com/564x/0a/86/41/0a86412f1a6b8d5dde8c4be29a10c88a.jpg',  # Art book
-            'https://i.pinimg.com/564x/c1/0c/d4/c10cd44e86351948c92091c0b9a92e65.jpg',  # Recipe book
-            'https://i.pinimg.com/564x/d9/2d/ee/d92dee61b7a7c4de0b263176d9865fb3.jpg'   # Craft book
+            'https://cimages.milaap.org/milaap/image/upload/c_fill,g_faces,h_315,w_420/v1657021004/production/images/campaign/40536/IMG-20220201-WA0053_1_ig67xk_1657021007.jpg',  # Art book
+            'https://i.etsystatic.com/52136374/r/il/c544df/6008893919/il_570xN.6008893919_7sj0.jpg',  # Recipe book
+            'https://exclusivelane.com/cdn/shop/articles/Crafts_of_India_Blog_4.png?v=1615551117'   # Craft book
         ],
         'electronics': [
-            'https://i.pinimg.com/564x/69/3b/50/693b5055fc5e14b9d7d5f17523b72b0a.jpg',  # Yoga mat
-            'https://i.pinimg.com/564x/de/e5/e1/dee5e154fb5bee20d8d6ce5198577a47.jpg',  # Tanpura
-            'https://i.pinimg.com/564x/d4/d0/f3/d4d0f3372578b19d33064ed42c4aba3a.jpg'   # Grinder
+            'https://m.media-amazon.com/images/S/aplus-media-library-service-media/c8b1e03e-e852-49e1-93cb-30ca4b190387.__CR0,0,600,450_PT0_SX600_V1___.jpg',  # Yoga mat
+            'https://static.wixstatic.com/media/bf7709_2b47f298b1834b4897c27d836d23de2c~mv2.png/v1/fill/w_811,h_467,al_c,q_90,enc_avif,quality_auto/bf7709_2b47f298b1834b4897c27d836d23de2c~mv2.png',  # Tanpura
+            'https://image.made-in-china.com/202f0j00ZkFWQvIGYPuz/Wheat-Maize-Solar-Flour-Making-Mill-Home-Small-Wheat-Flour-Mill-Milling-Machine-Machinery.webp'   # Grinder
         ]
     }
     
@@ -199,7 +199,7 @@ product_data = [
         'origin': 'Rajasthan'
     },
     {
-        'name': 'Temple Jewelry Earrings',
+        'name': 'Temple Jewelry Set',
         'description': 'Traditional South Indian temple jewelry earrings made with gold-plated brass and synthetic ruby stones. Features classic temple motifs and goddess designs inspired by ancient temple sculptures.',
         'price': 2499.00,
         'discount_price': 1999.00,

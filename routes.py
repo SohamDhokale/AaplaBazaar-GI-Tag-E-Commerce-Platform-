@@ -118,6 +118,11 @@ def products():
         query = query.order_by(Product.price.desc())
     elif sort == 'newest':
         query = query.order_by(Product.created_at.desc())
+        query = query.order_by(Product.price.asc())
+    elif sort == 'price_high':
+        query = query.order_by(Product.price.desc())
+    elif sort == 'newest':
+        query = query.order_by(Product.created_at.desc())
     
     # Pagination
     products = query.paginate(page=page, per_page=12, error_out=False)

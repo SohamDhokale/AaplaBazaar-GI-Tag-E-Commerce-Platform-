@@ -10,9 +10,9 @@ from flask import url_for
 logging.basicConfig(level=logging.DEBUG)
 
 # Twilio configuration
-TWILIO_ACCOUNT_SID = os.environ.get("TWILIO_ACCOUNT_SID", "your_twilio_sid")
-TWILIO_AUTH_TOKEN = os.environ.get("TWILIO_AUTH_TOKEN", "your_twilio_auth_token")
-TWILIO_PHONE_NUMBER = os.environ.get("TWILIO_PHONE_NUMBER", "+1234567890")
+TWILIO_ACCOUNT_SID = os.environ.get("TWILIO_ACCOUNT_SID")
+TWILIO_AUTH_TOKEN = os.environ.get("TWILIO_AUTH_TOKEN")
+TWILIO_PHONE_NUMBER = os.environ.get("TWILIO_PHONE_NUMBER")
 
 def send_sms_notification(to_phone_number, message):
     """
@@ -56,10 +56,7 @@ def send_sms_notification(to_phone_number, message):
 
 
 def generate_order_tracking(order):
-    """
-    Generate mock tracking updates for the order
-    Note: In a real application, this would be based on actual shipping data
-    """
+
     current_time = datetime.utcnow()
     tracking_updates = []
     

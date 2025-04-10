@@ -34,9 +34,9 @@
                         {% endfor %}
                     </select>
                     <select class="form-select" id="sortFilter" onchange="window.location.href=this.value">
-                        <option value="{{ url_for('products') }}?category={{ current_category }}&sort=newest" {% if current_sort == 'newest' %}selected{% endif %}>Newest</option>
-                        <option value="{{ url_for('products') }}?category={{ current_category }}&sort=price_low" {% if current_sort == 'price_low' %}selected{% endif %}>Price: Low to High</option>
-                        <option value="{{ url_for('products') }}?category={{ current_category }}&sort=price_high" {% if current_sort == 'price_high' %}selected{% endif %}>Price: High to Low</option>
+                        <option value="{{ url_for('products', category=current_category, sort='newest', search=search) }}" {% if current_sort == 'newest' %}selected{% endif %}>Newest</option>
+                        <option value="{{ url_for('products', category=current_category, sort='price_low', search=search) }}" {% if current_sort == 'price_low' %}selected{% endif %}>Price: Low to High</option>
+                        <option value="{{ url_for('products', category=current_category, sort='price_high', search=search) }}" {% if current_sort == 'price_high' %}selected{% endif %}>Price: High to Low</option>
                     </select>
                 </div>
             </div>
