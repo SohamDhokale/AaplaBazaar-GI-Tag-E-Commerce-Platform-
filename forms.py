@@ -64,7 +64,15 @@ class CheckoutForm(FlaskForm):
     shipping_city = StringField('City', validators=[DataRequired()])
     shipping_state = StringField('State', validators=[DataRequired()])
     shipping_pincode = StringField('PIN Code', validators=[DataRequired(), Length(min=6, max=10)])
-    payment_method = SelectField('Payment Method', choices=[('cod', 'Cash On Delivery')], validators=[DataRequired()])
+    payment_method = SelectField(
+        'Payment Method',
+        choices=[
+            ('cod', 'Cash on Delivery'),
+            ('upi', 'UPI (Scan or enter VPA)')
+        ],
+        validators=[DataRequired()]
+    )
+    upi_reference = StringField('UPI ID / VPA', validators=[Optional(), Length(max=64)])
     
     # Scheduling fields
     scheduled_date = StringField('Schedule Delivery Date', validators=[Optional()])

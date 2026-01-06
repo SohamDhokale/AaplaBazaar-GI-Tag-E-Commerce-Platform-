@@ -107,10 +107,45 @@
                         {% endfor %}
                     </div>
                     
-                    <div class="payment-info bg-light p-3 rounded mb-4">
-                        <h5 class="mb-3">Cash On Delivery Information</h5>
-                        <p>You will pay for your order when it is delivered to your address.</p>
-                        <p class="mb-0"><i class="fas fa-truck me-2"></i> SMS notifications will be sent to your registered phone number for order tracking.</p>
+                    <div id="cod-info" class="payment-info bg-light p-3 rounded mb-4">
+                        <div class="d-flex align-items-start">
+                            <div class="payment-icon cod me-3">
+                                <i class="fas fa-truck"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-2">Cash on Delivery</h5>
+                                <p class="mb-1">Pay at your doorstep with verified delivery partners.</p>
+                                <p class="text-muted small mb-0">We’ll share SMS updates with your registered number.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="upi-section" class="payment-info bg-light p-3 rounded mb-4 d-none">
+                        <div class="d-flex align-items-start">
+                            <div class="payment-icon upi me-3">
+                                <i class="fas fa-qrcode"></i>
+                            </div>
+                            <div class="w-100">
+                                <h5 class="mb-2">Pay via UPI</h5>
+                                <p class="mb-3">Scan a UPI QR or enter your VPA to confirm payment instantly.</p>
+                                <div class="row g-3">
+                                    <div class="col-md-7">
+                                        {{ form.upi_reference.label(class="form-label") }}
+                                        {{ form.upi_reference(class="form-control" + (" is-invalid" if form.upi_reference.errors else ""), placeholder="name@bank or scan to auto-fill") }}
+                                        {% for error in form.upi_reference.errors %}
+                                        <div class="invalid-feedback d-block">{{ error }}</div>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="col-md-5 d-grid">
+                                        <button type="button" id="start-upi-scan" class="btn btn-secondary">
+                                            <i class="fas fa-camera me-2"></i>Scan UPI QR
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="qr-reader" class="qr-reader mt-3 d-none"></div>
+                                <div id="qr-result" class="qr-result text-muted small mt-2"></div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="d-grid">
@@ -135,7 +170,7 @@
                 
                 <div class="checkout-total">
                     <span>Total:</span>
-                    <span>₹{{ total }}</span>
+                    <span data-base-total="{{ total }}">₹{{ total }}</span>
                 </div>
             </div>
         </div>
@@ -143,6 +178,8 @@
 </section>
 
 {% block extra_js %}
-
+<script src="https://unpkg.com/html5-qrcode@2.3.9/minified/html5-qrcode.min.js"></script>
+<script src="{{ url_for('static', filename='js/payment.js') }}"></script>
+<script src="{{ url_for('static', filename='js/checkout.js') }}"></script>
 {% endblock %}
 {% endblock %}

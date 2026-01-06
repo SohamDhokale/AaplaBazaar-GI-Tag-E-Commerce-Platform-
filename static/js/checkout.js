@@ -29,7 +29,12 @@ document.addEventListener('DOMContentLoaded', function() {
             // Update displayed total
             const totalElement = document.querySelector('.checkout-total span:last-child');
             if (totalElement) {
-                const baseTotal = parseFloat(totalElement.getAttribute('data-base-total'));
+                let baseTotal = parseFloat(totalElement.getAttribute('data-base-total'));
+                if (isNaN(baseTotal)) {
+                    // Fallback if data attribute is missing
+                    baseTotal = parseFloat(totalElement.textContent.replace(/[^\d.]/g, '')) || 0;
+                    totalElement.setAttribute('data-base-total', baseTotal.toString());
+                }
                 totalElement.textContent = '₹' + (baseTotal + additionalCost);
             }
         });

@@ -228,6 +228,72 @@ a:hover {
     background-color: var(--primary-color);
 }
 
+.hero-kicker {
+    display: inline-block;
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 1rem;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.hero-highlights {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-weight: 500;
+}
+
+.hero-highlights li {
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    padding: 0.5rem 0.75rem;
+    border-radius: 10px;
+}
+
+.trust-bar {
+    margin-top: -60px;
+    position: relative;
+    z-index: 5;
+}
+
+.trust-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+}
+
+.trust-card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.trust-label {
+    display: inline-block;
+    background: rgba(20, 123, 69, 0.08);
+    color: var(--secondary-color);
+    font-weight: 600;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+}
 /* Product Cards */
 .section-title {
     text-align: center;
@@ -352,6 +418,74 @@ a:hover {
 .product-actions {
     display: flex;
     justify-content: space-between;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.section-eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--secondary-color);
+    margin-bottom: 0.25rem;
+}
+
+.section-cta .btn {
+    min-width: 120px;
+}
+
+.spotlight-section {
+    background: linear-gradient(120deg, rgba(255, 138, 0, 0.05), rgba(20, 123, 69, 0.05));
+    border-top: 1px solid var(--medium-gray);
+    border-bottom: 1px solid var(--medium-gray);
+}
+
+.spotlight-media {
+    position: relative;
+    width: 100%;
+    min-height: 320px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.badge-soft {
+    background: var(--white);
+    color: var(--primary-color);
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.spotlight-media .badge-soft {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+}
+
+.spotlight-copy h2 {
+    margin-bottom: 0.75rem;
+}
+
+.checklist {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+}
+
+.checklist li {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
 }
 
 .price-filter input[type="number"] {
@@ -753,6 +887,37 @@ a:hover {
     margin-top: 3rem;
 }
 
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+}
+
+.feature-card {
+    display: flex;
+    gap: 0.75rem;
+    background: var(--white);
+    padding: 1.25rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+    align-items: center;
+}
+
+.feature-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    background: rgba(255, 138, 0, 0.12);
+    color: var(--primary-color);
+    font-size: 1.25rem;
+}
+
+.feature-icon.green { background: rgba(20, 123, 69, 0.12); color: var(--secondary-color); }
+.feature-icon.red { background: rgba(196, 43, 28, 0.12); color: var(--accent-color); }
+.feature-icon.brown { background: rgba(140, 59, 12, 0.12); color: var(--dark-accent); }
+
 /* Checkout Page */
 .checkout-container {
     display: grid;
@@ -799,6 +964,36 @@ a:hover {
     margin-top: 1rem;
     padding-top: 1rem;
     border-top: 1px solid var(--medium-gray);
+}
+
+.payment-info {
+    border: 1px dashed var(--medium-gray);
+}
+
+.payment-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    color: var(--primary-color);
+    background: rgba(255, 138, 0, 0.12);
+    font-size: 1.25rem;
+}
+
+.payment-icon.upi {
+    color: var(--secondary-color);
+    background: rgba(20, 123, 69, 0.12);
+}
+
+.qr-reader {
+    border: 1px solid var(--medium-gray);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.qr-result {
+    word-break: break-all;
 }
 
 /* Order Tracking */

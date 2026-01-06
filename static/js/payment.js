@@ -3,6 +3,8 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize payment form
     initPaymentForm();
+    initPaymentMethodSwitcher();
+    initUpiScanner();
 });
 
 // Initialize payment form handling
@@ -97,6 +99,112 @@ function initPaymentForm() {
             }
         });
     }
+}
+
+// Toggle payment method specific UI
+function initPaymentMethodSwitcher() {
+    const paymentSelect = document.getElementById('payment_method');
+    const codInfo = document.getElementById('cod-info');
+    const upiSection = document.getElementById('upi-section');
+    const upiInput = document.getElementById('upi_reference');
+
+    if (!paymentSelect) return;
+
+    const toggleSections = () => {
+        const method = paymentSelect.value;
+        const isUpi = method === 'upi';
+
+        if (codInfo) codInfo.classList.toggle('d-none', isUpi);
+        if (upiSection) upiSection.classList.toggle('d-none', !isUpi);
+        
+        // Make UPI ID mandatory only when UPI is chosen
+        if (upiInput) {
+            if (isUpi) {
+                upiInput.setAttribute('required', 'required');
+            } else {
+                upiInput.removeAttribute('required');
+                upiInput.classList.remove('is-invalid');
+            }
+        }
+    };
+
+    paymentSelect.addEventListener('change', toggleSections);
+    toggleSections();
+}
+
+// Basic UPI QR scanning using html5-qrcode (graceful fallback when unavailable)
+function initUpiScanner() {
+    const scanButton = document.getElementById('start-upi-scan');
+    const readerElement = document.getElementById('qr-reader');
+    const resultElement = document.getElementById('qr-result');
+    const upiInput = document.getElementById('upi_reference');
+
+    if (!scanButton || !readerElement) return;
+
+    let html5QrCode = null;
+    let isScanning = false;
+
+    const stopScanner = () => {
+        if (html5QrCode) {
+            html5QrCode.stop().then(() => {
+                html5QrCode.clear();
+            }).catch(() => {});
+        }
+        isScanning = false;
+        readerElement.classList.add('d-none');
+        scanButton.innerHTML = '<i class="fas fa-camera me-2"></i>Scan UPI QR';
+    };
+
+    const onScanSuccess = (decodedText) => {
+        if (upiInput) {
+            upiInput.value = extractUpiId(decodedText);
+            upiInput.dispatchEvent(new Event('input'));
+        }
+        if (resultElement) {
+            resultElement.textContent = `Scanned: ${decodedText}`;
+        }
+        stopScanner();
+    };
+
+    scanButton.addEventListener('click', () => {
+        if (isScanning) {
+            stopScanner();
+            return;
+        }
+
+        if (typeof Html5Qrcode === 'undefined') {
+            alert('QR scanning is not supported on this device/browser.');
+            return;
+        }
+
+        html5QrCode = new Html5Qrcode(readerElement.id);
+        readerElement.classList.remove('d-none');
+        scanButton.innerHTML = '<i class="fas fa-stop me-2"></i>Stop Scan';
+
+        html5QrCode.start(
+            { facingMode: 'environment' },
+            { fps: 10, qrbox: 250 },
+            onScanSuccess,
+            () => {}
+        ).then(() => {
+            isScanning = true;
+        }).catch(() => {
+            stopScanner();
+            alert('Unable to access camera for scanning.');
+        });
+    });
+}
+
+// Extract VPA/UPI ID from decoded QR text
+function extractUpiId(decodedText) {
+    try {
+        const url = new URL(decodedText);
+        const vpa = url.searchParams.get('pa');
+        if (vpa) return vpa;
+    } catch (e) {
+        // Not a valid URL, fall back to raw text
+    }
+    return decodedText;
 }
 
 // Handle payment success response

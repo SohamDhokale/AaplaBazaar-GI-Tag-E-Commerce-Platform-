@@ -377,6 +377,22 @@ def checkout():
         gift_wrap_cost = gift_wrap_costs.get(form.gift_wrap_type.data, 0) if form.is_gift.data else 0
         final_total = total + gift_wrap_cost
 
+        payment_status = 'Pending'
+        payment_id = None
+
+        if form.payment_method.data == 'upi':
+            # Basic guard for required UPI reference
+            if not form.upi_reference.data:
+                flash('Please provide your UPI ID / VPA to complete the payment.', 'danger')
+                form.upi_reference.errors.append('UPI ID is required for UPI payments.')
+                return render_template('checkout.html',
+                                       title='Checkout',
+                                       cart_items=cart_items,
+                                       total=total,
+                                       form=form)
+            payment_status = 'Completed'
+            payment_id = f'UPI:{form.upi_reference.data}'
+
         order = Order(
             user_id=current_user.id,
             total_amount=final_total,
@@ -385,7 +401,8 @@ def checkout():
             shipping_state=form.shipping_state.data,
             shipping_pincode=form.shipping_pincode.data,
             status='Processing',
-            payment_status='Pending',  # For Cash on Delivery
+            payment_status=payment_status,
+            payment_id=payment_id,
             scheduled_date=datetime.strptime(form.scheduled_date.data, '%Y-%m-%d') if form.scheduled_date.data else None,
             schedule_note=form.schedule_note.data,
             is_gift=form.is_gift.data,

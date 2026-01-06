@@ -7,23 +7,40 @@
     <div class="swiper-wrapper">
         <div class="swiper-slide hero-slide" style="background: linear-gradient(rgba(255, 255, 255, 0.4), rgba(0, 0, 0, 0.4)), url('https://wallpapers.com/images/hd/india-pictures-b7ykjmiy60plt4h2.jpg?auto=compress&cs=tinysrgb&w=1920&h=1080') center/cover;">
             <div class="slide-content">
+                <div class="hero-kicker">New Season · Indian Originals</div>
                 <h1 class="slide-title">डिस्कव्हर ऑथेंटिक इंडियन प्रोडक्ट्स ! </h1>
                 <p class="slide-subtitle">अभिमानाने आणि परंपरेने हस्तनिर्मित, आमचा संग्रह भारतातील सर्वोत्तम वस्तू तुमच्या दारात आणतो.</p>
-                <a href="{{ url_for('products') }}" class="btn btn-primary btn-lg">Shop Now</a>
+                <div class="hero-actions">
+                    <a href="{{ url_for('products') }}" class="btn btn-primary btn-lg">Shop New Arrivals</a>
+                    <a href="{{ url_for('gi_tagged_products') }}" class="btn btn-outline-light btn-lg">Explore Heritage</a>
+                </div>
+                <ul class="hero-highlights">
+                    <li><i class="fas fa-check-circle me-2"></i>Curated directly from artisans</li>
+                    <li><i class="fas fa-check-circle me-2"></i>Quality-checked & secure delivery</li>
+                    <li><i class="fas fa-check-circle me-2"></i>Trusted by conscious shoppers</li>
+                </ul>
             </div>
         </div>
         <div class="swiper-slide hero-slide" style="background: linear-gradient(rgba(255, 255, 255, 0.4), rgba(0,0,0,0.4)), url('https://geographicalindicationsoftamilnadu.files.wordpress.com/2021/02/all-2-3.jpg?auto=compress&cs=tinysrgb&w=1920&h=1080') center/cover;">
             <div class="slide-content">
+                <div class="hero-kicker">GI Tagged Exclusives</div>
                 <h1 class="slide-title">जी.आई. टॅग प्रॉडक्ट ऑफ इंडिया !</h1>
                 <p class="slide-subtitle">भारताच्या समृद्ध वारशाचे प्रतिनिधित्व करणाऱ्या जीआय टॅग केलेल्या उत्पादनांचा आमचा खास संग्रह एक्सप्लोर करा..</p>
-                <a href="{{ url_for('gi_tagged_products') }}" class="btn btn-primary btn-lg">Explore GI Products</a>
+                <div class="hero-actions">
+                    <a href="{{ url_for('gi_tagged_products') }}" class="btn btn-primary btn-lg">See Curated List</a>
+                    <a href="{{ url_for('products') }}" class="btn btn-outline-light btn-lg">View All Products</a>
+                </div>
             </div>
         </div>
         <div class="swiper-slide hero-slide" style="background: linear-gradient(rgba(255, 255, 255, 0.4), rgba(0,0,0,0.4)), url('https://www.visittnt.com/blog/wp-content/uploads/2019/09/navratri.jpg?auto=compress&cs=tinysrgb&w=1920&h=1080') center/cover;">
             <div class="slide-content">
+                <div class="hero-kicker">Festive Picks</div>
                 <h1 class="slide-title">फेस्टीवल सीजन सेल ! </h1>
                 <p class="slide-subtitle">आमच्या खास कलेक्शनसह भारतीय सणांचा उत्साह साजरा करा. ३०% पर्यंत सूट मिळवा!</p>
-                <a href="{{ url_for('products') }}" class="btn btn-primary btn-lg">Shop Sale</a>
+                <div class="hero-actions">
+                    <a href="{{ url_for('products') }}" class="btn btn-primary btn-lg">Shop the Sale</a>
+                    <a href="{{ url_for('wishlist') if current_user.is_authenticated else url_for('register') }}" class="btn btn-outline-light btn-lg">Save Favourites</a>
+                </div>
             </div>
         </div>
     </div>
@@ -31,6 +48,28 @@
     <div class="swiper-button-prev"></div>
     <div class="swiper-button-next"></div>
 </div>
+
+<section class="trust-bar">
+    <div class="container">
+        <div class="trust-grid">
+            <div class="trust-card">
+                <span class="trust-label">Artisan-first</span>
+                <h4>2,000+ curated products</h4>
+                <p>Handpicked crafts, textiles, spices, and wellness essentials.</p>
+            </div>
+            <div class="trust-card">
+                <span class="trust-label">Nationwide</span>
+                <h4>Pan-India delivery</h4>
+                <p>Reliable logistics partners with doorstep updates.</p>
+            </div>
+            <div class="trust-card">
+                <span class="trust-label">Secure</span>
+                <h4>Protected checkout</h4>
+                <p>UPI, COD, and bank-grade security for every order.</p>
+            </div>
+        </div>
+    </div>
+</section>
 
 <!-- Categories -->
 <section class="py-5">
@@ -124,7 +163,15 @@
 <!-- Featured Products -->
 <section class="py-5">
     <div class="container">
-        <h2 class="section-title">Featured Products</h2>
+        <div class="section-header">
+            <div>
+                <p class="section-eyebrow">Editor's picks</p>
+                <h2 class="section-title text-start">Featured Products</h2>
+            </div>
+            <div class="section-cta">
+                <a href="{{ url_for('products') }}" class="btn btn-outline-primary">See all</a>
+            </div>
+        </div>
         <div class="product-grid">
             {% for product in featured_products %}
             <div class="product-card">
@@ -178,6 +225,32 @@
         </div>
         <div class="text-center mt-4">
             <a href="{{ url_for('products') }}" class="btn btn-outline-primary btn-lg">View All Products</a>
+        </div>
+    </div>
+</section>
+
+<!-- Spotlight -->
+<section class="spotlight-section py-5">
+    <div class="container">
+        <div class="row g-4 align-items-center">
+            <div class="col-lg-6">
+                <div class="spotlight-media" style="background-image: linear-gradient(120deg, rgba(255,138,0,0.15), rgba(20,123,69,0.15)), url('https://images.unsplash.com/photo-1520333789090-1afc82db536a?auto=format&fit=crop&w=1200&q=80');">
+                    <span class="badge badge-soft">Craft stories</span>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="spotlight-copy">
+                    <p class="section-eyebrow">Why AaplaBazaar</p>
+                    <h2>Designed for discerning shoppers</h2>
+                    <p>From heirloom spices to contemporary decor, every listing is vetted for authenticity, craftsmanship, and sustainability. Discover brands that celebrate India's regional excellence.</p>
+                    <ul class="checklist">
+                        <li><i class="fas fa-check-circle me-2"></i>Direct sourcing with fair pricing</li>
+                        <li><i class="fas fa-check-circle me-2"></i>Responsive support for exchanges</li>
+                        <li><i class="fas fa-check-circle me-2"></i>Rich storytelling for every product</li>
+                    </ul>
+                    <a href="{{ url_for('products') }}" class="btn btn-primary">Explore collections</a>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -252,41 +325,33 @@
 <!-- Features -->
 <section class="py-5 bg-light">
     <div class="container">
-        <div class="row g-4">
-            <div class="col-md-3">
-                <div class="feature text-center">
-                    <div class="feature-icon mb-3">
-                        <i class="fas fa-truck fa-3x" style="color: #FF8A00;"></i>
-                    </div>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-truck"></i></div>
+                <div>
                     <h4>Free Shipping</h4>
-                    <p>On orders over ₹599</p>
+                    <p>Complimentary delivery on orders over ₹599 with trusted carriers.</p>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="feature text-center">
-                    <div class="feature-icon mb-3">
-                        <i class="fas fa-undo fa-3x" style="color: #147B45;"></i>
-                    </div>
+            <div class="feature-card">
+                <div class="feature-icon green"><i class="fas fa-undo"></i></div>
+                <div>
                     <h4>Easy Returns</h4>
-                    <p>7-day return policy</p>
+                    <p>7-day hassle-free exchanges for eligible items.</p>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="feature text-center">
-                    <div class="feature-icon mb-3">
-                        <i class="fas fa-shield-alt fa-3x" style="color: #C42B1C;"></i>
-                    </div>
+            <div class="feature-card">
+                <div class="feature-icon red"><i class="fas fa-shield-alt"></i></div>
+                <div>
                     <h4>Secure Payments</h4>
-                    <p>100% secure checkout</p>
+                    <p>PCI-compliant checkout with UPI, cards, and COD options.</p>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="feature text-center">
-                    <div class="feature-icon mb-3">
-                        <i class="fas fa-headset fa-3x" style="color: #8C3B0C;"></i>
-                    </div>
+            <div class="feature-card">
+                <div class="feature-icon brown"><i class="fas fa-headset"></i></div>
+                <div>
                     <h4>24/7 Support</h4>
-                    <p>Dedicated customer service</p>
+                    <p>Chat, email, and phone support for quick resolutions.</p>
                 </div>
             </div>
         </div>
