@@ -35,7 +35,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     baseTotal = parseFloat(totalElement.textContent.replace(/[^\d.]/g, '')) || 0;
                     totalElement.setAttribute('data-base-total', baseTotal.toString());
                 }
-                totalElement.textContent = '₹' + (baseTotal + additionalCost);
+                const newTotal = baseTotal + additionalCost;
+                totalElement.textContent = '₹' + newTotal;
+                document.dispatchEvent(new CustomEvent('checkout:totalUpdated', { detail: { total: newTotal } }));
             }
         });
     }

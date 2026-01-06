@@ -127,7 +127,7 @@
                             </div>
                             <div class="w-100">
                                 <h5 class="mb-2">Pay via UPI</h5>
-                                <p class="mb-3">Scan a UPI QR or enter your VPA to confirm payment instantly.</p>
+                                <p class="mb-3">Scan the QR or tap your preferred UPI app to complete payment.</p>
                                 <div class="row g-3">
                                     <div class="col-md-7">
                                         {{ form.upi_reference.label(class="form-label") }}
@@ -141,6 +141,16 @@
                                             <i class="fas fa-camera me-2"></i>Scan UPI QR
                                         </button>
                                     </div>
+                                </div>
+                                <div class="upi-apps mt-3">
+                                    <button type="button" class="upi-app-btn gpay" data-upi-app="gpay"><i class="fab fa-google-pay me-2"></i>Google Pay</button>
+                                    <button type="button" class="upi-app-btn phonepe" data-upi-app="phonepe"><i class="fas fa-mobile-alt me-2"></i>PhonePe</button>
+                                    <button type="button" class="upi-app-btn paytm" data-upi-app="paytm"><i class="fas fa-wallet me-2"></i>Paytm</button>
+                                </div>
+                                <div class="upi-qr mt-3">
+                                    <img id="upi-qr-image" alt="Scan to pay via UPI" class="img-fluid rounded border" 
+                                         data-upi-vpa="{{ upi_vpa }}" data-upi-payee="{{ upi_payee }}" data-base-amount="{{ total }}">
+                                    <div class="qr-hint text-muted small mt-2">Scan with any UPI app. Amount auto-fills; you can edit before paying.</div>
                                 </div>
                                 <div id="qr-reader" class="qr-reader mt-3 d-none"></div>
                                 <div id="qr-result" class="qr-result text-muted small mt-2"></div>

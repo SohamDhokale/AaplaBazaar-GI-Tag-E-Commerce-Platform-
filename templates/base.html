@@ -41,48 +41,60 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link {% if request.path == url_for('index') %}active{% endif %}" href="{{ url_for('index') }}">Home</a>
+                            <a class="nav-link {% if request.path == url_for('index') %}active{% endif %}" href="{{ url_for('index', lang=current_language) }}">{{ t('nav.home', 'Home') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if request.path == url_for('products') %}active{% endif %}" href="{{ url_for('products') }}">Shop</a>
+                            <a class="nav-link {% if request.path == url_for('products') %}active{% endif %}" href="{{ url_for('products', lang=current_language) }}">{{ t('nav.shop', 'Shop') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if request.path == url_for('gi_tagged_products') %}active{% endif %}" href="{{ url_for('gi_tagged_products') }}">GI Tagged Products</a>
+                            <a class="nav-link {% if request.path == url_for('gi_tagged_products') %}active{% endif %}" href="{{ url_for('gi_tagged_products', lang=current_language) }}">{{ t('nav.gi', 'GI Tagged Products') }}</a>
                         </li>
                         {% if current_user.is_authenticated and current_user.is_admin %}
                         <li class="nav-item">
-                            <a class="nav-link {% if '/admin/' in request.path %}active{% endif %}" href="{{ url_for('admin_dashboard') }}">Admin</a>
+                            <a class="nav-link {% if '/admin/' in request.path %}active{% endif %}" href="{{ url_for('admin_dashboard', lang=current_language) }}">{{ t('nav.admin', 'Admin') }}</a>
                         </li>
                         {% endif %}
                     </ul>
-                    <div class="d-flex nav-icons">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="language-switcher dropdown">
+                            <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ current_language|upper }}
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                {% for lang in supported_languages %}
+                                <li><a class="dropdown-item {% if lang == current_language %}active{% endif %}" href="{{ build_lang_url(lang) }}">{{ lang|upper }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="d-flex nav-icons">
                         <a href="{{ url_for('products') }}?search=" class="nav-icon" data-toggle="tooltip" title="Search">
                             <i class="fas fa-search"></i>
                         </a>
                         {% if current_user.is_authenticated %}
-                        <a href="{{ url_for('profile') }}" class="nav-icon {% if request.path == url_for('profile') %}active{% endif %}" data-toggle="tooltip" title="My Profile">
+                        <a href="{{ url_for('profile', lang=current_language) }}" class="nav-icon {% if request.path == url_for('profile') %}active{% endif %}" data-toggle="tooltip" title="{{ t('nav.profile', 'My Profile') }}">
                             <i class="fas fa-user"></i>
                         </a>
-                        <a href="{{ url_for('wishlist') }}" class="nav-icon {% if request.path == url_for('wishlist') %}active{% endif %}" data-toggle="tooltip" title="Wishlist">
+                        <a href="{{ url_for('wishlist', lang=current_language) }}" class="nav-icon {% if request.path == url_for('wishlist') %}active{% endif %}" data-toggle="tooltip" title="{{ t('nav.wishlist', 'Wishlist') }}">
                             <i class="fas fa-heart"></i>
                         </a>
-                        <a href="{{ url_for('cart') }}" class="nav-icon {% if request.path == url_for('cart') %}active{% endif %}" data-toggle="tooltip" title="Cart">
+                        <a href="{{ url_for('cart', lang=current_language) }}" class="nav-icon {% if request.path == url_for('cart') %}active{% endif %}" data-toggle="tooltip" title="{{ t('nav.cart', 'Cart') }}">
                             <i class="fas fa-shopping-cart"></i>
                             {% if current_user.cart_items %}
                             <span class="badge-cart">{{ current_user.cart_items|length }}</span>
                             {% endif %}
                         </a>
-                        <a href="{{ url_for('logout') }}" class="nav-icon" data-toggle="tooltip" title="Logout">
+                        <a href="{{ url_for('logout', lang=current_language) }}" class="nav-icon" data-toggle="tooltip" title="{{ t('nav.logout', 'Logout') }}">
                             <i class="fas fa-sign-out-alt"></i>
                         </a>
                         {% else %}
-                        <a href="{{ url_for('login') }}" class="nav-icon {% if request.path == url_for('login') %}active{% endif %}" data-toggle="tooltip" title="Login">
+                        <a href="{{ url_for('login', lang=current_language) }}" class="nav-icon {% if request.path == url_for('login') %}active{% endif %}" data-toggle="tooltip" title="{{ t('nav.login', 'Login') }}">
                             <i class="fas fa-sign-in-alt"></i>
                         </a>
-                        <a href="{{ url_for('register') }}" class="nav-icon {% if request.path == url_for('register') %}active{% endif %}" data-toggle="tooltip" title="Register">
+                        <a href="{{ url_for('register', lang=current_language) }}" class="nav-icon {% if request.path == url_for('register') %}active{% endif %}" data-toggle="tooltip" title="{{ t('nav.register', 'Register') }}">
                             <i class="fas fa-user-plus"></i>
                         </a>
                         {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -113,8 +125,8 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-section">
-                    <h3 class="footer-title">AaplaBazaar</h3>
-                    <p>Your one-stop destination for authentic Indian products. Discover the rich heritage and craftsmanship of India.</p>
+                    <h3 class="footer-title">{{ t('footer.title', 'AaplaBazaar') }}</h3>
+                    <p>{{ t('footer.tagline', 'Your one-stop destination for authentic Indian products. Discover the rich heritage and craftsmanship of India.') }}</p>
                     <div class="footer-social">
                         <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
                         <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
@@ -123,42 +135,42 @@
                     </div>
                 </div>
                 <div class="footer-section">
-                    <h3 class="footer-title">Quick Links</h3>
+                    <h3 class="footer-title">{{ t('footer.quick_links', 'Quick Links') }}</h3>
                     <ul class="footer-links">
-                        <li class="footer-link"><a href="{{ url_for('index') }}">Home</a></li>
-                        <li class="footer-link"><a href="{{ url_for('products') }}">Shop</a></li>
-                        <li class="footer-link"><a href="{{ url_for('gi_tagged_products') }}">GI Tagged Products</a></li>
+                        <li class="footer-link"><a href="{{ url_for('index', lang=current_language) }}">{{ t('nav.home', 'Home') }}</a></li>
+                        <li class="footer-link"><a href="{{ url_for('products', lang=current_language) }}">{{ t('nav.shop', 'Shop') }}</a></li>
+                        <li class="footer-link"><a href="{{ url_for('gi_tagged_products', lang=current_language) }}">{{ t('nav.gi', 'GI Tagged Products') }}</a></li>
                         {% if current_user.is_authenticated %}
-                        <li class="footer-link"><a href="{{ url_for('orders') }}">My Orders</a></li>
-                        <li class="footer-link"><a href="{{ url_for('profile') }}">My Account</a></li>
+                        <li class="footer-link"><a href="{{ url_for('orders', lang=current_language) }}">My Orders</a></li>
+                        <li class="footer-link"><a href="{{ url_for('profile', lang=current_language) }}">{{ t('nav.profile', 'My Account') }}</a></li>
                         {% else %}
-                        <li class="footer-link"><a href="{{ url_for('login') }}">Login</a></li>
-                        <li class="footer-link"><a href="{{ url_for('register') }}">Register</a></li>
+                        <li class="footer-link"><a href="{{ url_for('login', lang=current_language) }}">{{ t('nav.login', 'Login') }}</a></li>
+                        <li class="footer-link"><a href="{{ url_for('register', lang=current_language) }}">{{ t('nav.register', 'Register') }}</a></li>
                         {% endif %}
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h3 class="footer-title">Categories</h3>
+                    <h3 class="footer-title">{{ t('footer.categories', 'Categories') }}</h3>
                     <ul class="footer-links">
-                        <li class="footer-link"><a href="{{ url_for('products') }}?category=clothing">Clothing</a></li>
-                        <li class="footer-link"><a href="{{ url_for('products') }}?category=handicrafts">Handicrafts</a></li>
-                        <li class="footer-link"><a href="{{ url_for('products') }}?category=jewelry">Jewelry</a></li>
-                        <li class="footer-link"><a href="{{ url_for('products') }}?category=spices">Spices</a></li>
-                        <li class="footer-link"><a href="{{ url_for('products') }}?category=home_decor">Home Decor</a></li>
+                        <li class="footer-link"><a href="{{ url_for('products', lang=current_language) }}?category=clothing">{{ t('categories.clothing', 'Clothing') }}</a></li>
+                        <li class="footer-link"><a href="{{ url_for('products', lang=current_language) }}?category=handicrafts">{{ t('categories.handicrafts', 'Handicrafts') }}</a></li>
+                        <li class="footer-link"><a href="{{ url_for('products', lang=current_language) }}?category=jewelry">{{ t('categories.jewelry', 'Jewelry') }}</a></li>
+                        <li class="footer-link"><a href="{{ url_for('products', lang=current_language) }}?category=spices">{{ t('categories.spices', 'Spices') }}</a></li>
+                        <li class="footer-link"><a href="{{ url_for('products', lang=current_language) }}?category=home_decor">{{ t('categories.home_decor', 'Home Decor') }}</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h3 class="footer-title">Contact Us</h3>
+                    <h3 class="footer-title">{{ t('footer.contact', 'Contact Us') }}</h3>
                     <ul class="footer-links">
-                        <li class="footer-link"><i class="fas fa-map-marker-alt me-2"></i>Survey No.55, ViMEET, Khalapur, Mumbai, India</li>
-                        <li class="footer-link"><i class="fas fa-phone me-2"></i> +91 7028154299</li>
-                        <li class="footer-link"><i class="fas fa-envelope me-2"></i> support@aaplabazaar.com</li>
-                        <li class="footer-link"><i class="fas fa-clock me-2"></i> Mon-Sat: 9AM - 8PM</li>
+                        <li class="footer-link"><i class="fas fa-map-marker-alt me-2"></i>{{ t('footer.contact_address', 'Survey No.55, ViMEET, Khalapur, Mumbai, India') }}</li>
+                        <li class="footer-link"><i class="fas fa-phone me-2"></i> {{ t('footer.contact_phone', '+91 7028154299') }}</li>
+                        <li class="footer-link"><i class="fas fa-envelope me-2"></i> {{ t('footer.contact_email', 'support@aaplabazaar.com') }}</li>
+                        <li class="footer-link"><i class="fas fa-clock me-2"></i> {{ t('footer.contact_hours', 'Mon-Sat: 9AM - 8PM') }}</li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; {{ now.year }} AaplaBazaar. All Rights Reserved. Designed with <i class="fas fa-heart"></i> in India</p>
+                <p>&copy; {{ now.year }} AaplaBazaar. {{ t('footer.rights', 'All Rights Reserved.') }} Designed with <i class="fas fa-heart"></i> in India</p>
             </div>
         </div>
     </footer>

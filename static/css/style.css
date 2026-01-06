@@ -986,6 +986,41 @@ a:hover {
     background: rgba(20, 123, 69, 0.12);
 }
 
+.upi-apps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.upi-app-btn {
+    flex: 1 1 150px;
+    border: 1px solid var(--medium-gray);
+    background: var(--white);
+    border-radius: 10px;
+    padding: 0.65rem 0.75rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    transition: all 0.2s ease;
+}
+
+.upi-app-btn:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.upi-app-btn.gpay { color: #4285f4; }
+.upi-app-btn.phonepe { color: #5f259f; }
+.upi-app-btn.paytm { color: #00baf2; }
+
+.upi-qr img {
+    max-width: 260px;
+    width: 100%;
+    background: var(--white);
+}
+
 .qr-reader {
     border: 1px solid var(--medium-gray);
     border-radius: 10px;

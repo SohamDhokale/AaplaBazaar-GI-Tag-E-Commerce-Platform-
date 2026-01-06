@@ -7,39 +7,39 @@
     <div class="swiper-wrapper">
         <div class="swiper-slide hero-slide" style="background: linear-gradient(rgba(255, 255, 255, 0.4), rgba(0, 0, 0, 0.4)), url('https://wallpapers.com/images/hd/india-pictures-b7ykjmiy60plt4h2.jpg?auto=compress&cs=tinysrgb&w=1920&h=1080') center/cover;">
             <div class="slide-content">
-                <div class="hero-kicker">New Season · Indian Originals</div>
-                <h1 class="slide-title">डिस्कव्हर ऑथेंटिक इंडियन प्रोडक्ट्स ! </h1>
-                <p class="slide-subtitle">अभिमानाने आणि परंपरेने हस्तनिर्मित, आमचा संग्रह भारतातील सर्वोत्तम वस्तू तुमच्या दारात आणतो.</p>
+                <div class="hero-kicker">{{ t('hero.kicker1') }}</div>
+                <h1 class="slide-title">{{ t('hero.title1') }}</h1>
+                <p class="slide-subtitle">{{ t('hero.subtitle1') }}</p>
                 <div class="hero-actions">
-                    <a href="{{ url_for('products') }}" class="btn btn-primary btn-lg">Shop New Arrivals</a>
-                    <a href="{{ url_for('gi_tagged_products') }}" class="btn btn-outline-light btn-lg">Explore Heritage</a>
+                    <a href="{{ url_for('products', lang=current_language) }}" class="btn btn-primary btn-lg">{{ t('hero.cta1_primary') }}</a>
+                    <a href="{{ url_for('gi_tagged_products', lang=current_language) }}" class="btn btn-outline-light btn-lg">{{ t('hero.cta1_secondary') }}</a>
                 </div>
                 <ul class="hero-highlights">
-                    <li><i class="fas fa-check-circle me-2"></i>Curated directly from artisans</li>
-                    <li><i class="fas fa-check-circle me-2"></i>Quality-checked & secure delivery</li>
-                    <li><i class="fas fa-check-circle me-2"></i>Trusted by conscious shoppers</li>
+                    <li><i class="fas fa-check-circle me-2"></i>{{ t('hero.highlight1') }}</li>
+                    <li><i class="fas fa-check-circle me-2"></i>{{ t('hero.highlight2') }}</li>
+                    <li><i class="fas fa-check-circle me-2"></i>{{ t('hero.highlight3') }}</li>
                 </ul>
             </div>
         </div>
         <div class="swiper-slide hero-slide" style="background: linear-gradient(rgba(255, 255, 255, 0.4), rgba(0,0,0,0.4)), url('https://geographicalindicationsoftamilnadu.files.wordpress.com/2021/02/all-2-3.jpg?auto=compress&cs=tinysrgb&w=1920&h=1080') center/cover;">
             <div class="slide-content">
-                <div class="hero-kicker">GI Tagged Exclusives</div>
-                <h1 class="slide-title">जी.आई. टॅग प्रॉडक्ट ऑफ इंडिया !</h1>
-                <p class="slide-subtitle">भारताच्या समृद्ध वारशाचे प्रतिनिधित्व करणाऱ्या जीआय टॅग केलेल्या उत्पादनांचा आमचा खास संग्रह एक्सप्लोर करा..</p>
+                <div class="hero-kicker">{{ t('hero.kicker2') }}</div>
+                <h1 class="slide-title">{{ t('hero.title2') }}</h1>
+                <p class="slide-subtitle">{{ t('hero.subtitle2') }}</p>
                 <div class="hero-actions">
-                    <a href="{{ url_for('gi_tagged_products') }}" class="btn btn-primary btn-lg">See Curated List</a>
-                    <a href="{{ url_for('products') }}" class="btn btn-outline-light btn-lg">View All Products</a>
+                    <a href="{{ url_for('gi_tagged_products', lang=current_language) }}" class="btn btn-primary btn-lg">{{ t('hero.cta2_primary') }}</a>
+                    <a href="{{ url_for('products', lang=current_language) }}" class="btn btn-outline-light btn-lg">{{ t('hero.cta2_secondary') }}</a>
                 </div>
             </div>
         </div>
         <div class="swiper-slide hero-slide" style="background: linear-gradient(rgba(255, 255, 255, 0.4), rgba(0,0,0,0.4)), url('https://www.visittnt.com/blog/wp-content/uploads/2019/09/navratri.jpg?auto=compress&cs=tinysrgb&w=1920&h=1080') center/cover;">
             <div class="slide-content">
-                <div class="hero-kicker">Festive Picks</div>
-                <h1 class="slide-title">फेस्टीवल सीजन सेल ! </h1>
-                <p class="slide-subtitle">आमच्या खास कलेक्शनसह भारतीय सणांचा उत्साह साजरा करा. ३०% पर्यंत सूट मिळवा!</p>
+                <div class="hero-kicker">{{ t('hero.kicker3') }}</div>
+                <h1 class="slide-title">{{ t('hero.title3') }}</h1>
+                <p class="slide-subtitle">{{ t('hero.subtitle3') }}</p>
                 <div class="hero-actions">
-                    <a href="{{ url_for('products') }}" class="btn btn-primary btn-lg">Shop the Sale</a>
-                    <a href="{{ url_for('wishlist') if current_user.is_authenticated else url_for('register') }}" class="btn btn-outline-light btn-lg">Save Favourites</a>
+                    <a href="{{ url_for('products', lang=current_language) }}" class="btn btn-primary btn-lg">{{ t('hero.cta3_primary') }}</a>
+                    <a href="{{ url_for('wishlist', lang=current_language) if current_user.is_authenticated else url_for('register', lang=current_language) }}" class="btn btn-outline-light btn-lg">{{ t('hero.cta3_secondary') }}</a>
                 </div>
             </div>
         </div>
@@ -53,19 +53,19 @@
     <div class="container">
         <div class="trust-grid">
             <div class="trust-card">
-                <span class="trust-label">Artisan-first</span>
-                <h4>2,000+ curated products</h4>
-                <p>Handpicked crafts, textiles, spices, and wellness essentials.</p>
+                <span class="trust-label">{{ t('trust.artisan') }}</span>
+                <h4>{{ t('trust.products') }}</h4>
+                <p>{{ t('trust.products_desc') }}</p>
             </div>
             <div class="trust-card">
-                <span class="trust-label">Nationwide</span>
-                <h4>Pan-India delivery</h4>
-                <p>Reliable logistics partners with doorstep updates.</p>
+                <span class="trust-label">{{ t('trust.delivery') }}</span>
+                <h4>{{ t('trust.delivery') }}</h4>
+                <p>{{ t('trust.delivery_desc') }}</p>
             </div>
             <div class="trust-card">
-                <span class="trust-label">Secure</span>
-                <h4>Protected checkout</h4>
-                <p>UPI, COD, and bank-grade security for every order.</p>
+                <span class="trust-label">{{ t('trust.secure') }}</span>
+                <h4>{{ t('trust.secure') }}</h4>
+                <p>{{ t('trust.secure_desc') }}</p>
             </div>
         </div>
     </div>
@@ -74,84 +74,84 @@
 <!-- Categories -->
 <section class="py-5">
     <div class="container">
-        <h2 class="section-title">Shop by Category</h2>
+        <h2 class="section-title">{{ t('categories.title') }}</h2>
         <div class="row g-4">
             <div class="col-6 col-md-4 col-lg-3">
-                <a href="{{ url_for('products') }}?category=clothing" class="category-card d-block">
+                <a href="{{ url_for('products', lang=current_language) }}?category=clothing" class="category-card d-block">
                     <div class="card h-100">
                         <div class="card-body text-center p-4" style="background-color: #fff8f0;">
                             <i class="fas fa-tshirt fa-3x mb-3" style="color: #FF8A00;"></i>
-                            <h5 class="card-title mb-0">Clothing</h5>
+                            <h5 class="card-title mb-0">{{ t('categories.clothing') }}</h5>
                         </div>
                     </div>
                 </a>
             </div>
             <div class="col-6 col-md-4 col-lg-3">
-                <a href="{{ url_for('products') }}?category=handicrafts" class="category-card d-block">
+                <a href="{{ url_for('products', lang=current_language) }}?category=handicrafts" class="category-card d-block">
                     <div class="card h-100">
                         <div class="card-body text-center p-4" style="background-color: #f0f8ff;">
                             <i class="fas fa-paint-brush fa-3x mb-3" style="color: #147B45;"></i>
-                            <h5 class="card-title mb-0">Handicrafts</h5>
+                            <h5 class="card-title mb-0">{{ t('categories.handicrafts') }}</h5>
                         </div>
                     </div>
                 </a>
             </div>
             <div class="col-6 col-md-4 col-lg-3">
-                <a href="{{ url_for('products') }}?category=jewelry" class="category-card d-block">
+                <a href="{{ url_for('products', lang=current_language) }}?category=jewelry" class="category-card d-block">
                     <div class="card h-100">
                         <div class="card-body text-center p-4" style="background-color: #fff0f5;">
                             <i class="fas fa-gem fa-3x mb-3" style="color: #C42B1C;"></i>
-                            <h5 class="card-title mb-0">Jewelry</h5>
+                            <h5 class="card-title mb-0">{{ t('categories.jewelry') }}</h5>
                         </div>
                     </div>
                 </a>
             </div>
             <div class="col-6 col-md-4 col-lg-3">
-                <a href="{{ url_for('products') }}?category=spices" class="category-card d-block">
+                <a href="{{ url_for('products', lang=current_language) }}?category=spices" class="category-card d-block">
                     <div class="card h-100">
                         <div class="card-body text-center p-4" style="background-color: #fffacd;">
                             <i class="fas fa-mortar-pestle fa-3x mb-3" style="color: #8C3B0C;"></i>
-                            <h5 class="card-title mb-0">Spices</h5>
+                            <h5 class="card-title mb-0">{{ t('categories.spices') }}</h5>
                         </div>
                     </div>
                 </a>
             </div>
             <div class="col-6 col-md-4 col-lg-3">
-                <a href="{{ url_for('products') }}?category=home_decor" class="category-card d-block">
+                <a href="{{ url_for('products', lang=current_language) }}?category=home_decor" class="category-card d-block">
                     <div class="card h-100">
                         <div class="card-body text-center p-4" style="background-color: #f0fff0;">
                             <i class="fas fa-home fa-3x mb-3" style="color: #147B45;"></i>
-                            <h5 class="card-title mb-0">Home Decor</h5>
+                            <h5 class="card-title mb-0">{{ t('categories.home_decor') }}</h5>
                         </div>
                     </div>
                 </a>
             </div>
             <div class="col-6 col-md-4 col-lg-3">
-                <a href="{{ url_for('products') }}?category=food_products" class="category-card d-block">
+                <a href="{{ url_for('products', lang=current_language) }}?category=food_products" class="category-card d-block">
                     <div class="card h-100">
                         <div class="card-body text-center p-4" style="background-color: #fff0f0;">
                             <i class="fas fa-utensils fa-3x mb-3" style="color: #FF8A00;"></i>
-                            <h5 class="card-title mb-0">Food Products</h5>
+                            <h5 class="card-title mb-0">{{ t('categories.food_products') }}</h5>
                         </div>
                     </div>
                 </a>
             </div>
             <div class="col-6 col-md-4 col-lg-3">
-                <a href="{{ url_for('products') }}?category=beauty" class="category-card d-block">
+                <a href="{{ url_for('products', lang=current_language) }}?category=beauty" class="category-card d-block">
                     <div class="card h-100">
                         <div class="card-body text-center p-4" style="background-color: #f5f0ff;">
                             <i class="fas fa-spa fa-3x mb-3" style="color: #C42B1C;"></i>
-                            <h5 class="card-title mb-0">Beauty & Wellness</h5>
+                            <h5 class="card-title mb-0">{{ t('categories.beauty') }}</h5>
                         </div>
                     </div>
                 </a>
             </div>
             <div class="col-6 col-md-4 col-lg-3">
-                <a href="{{ url_for('products') }}" class="category-card d-block">
+                <a href="{{ url_for('products', lang=current_language) }}" class="category-card d-block">
                     <div class="card h-100">
                         <div class="card-body text-center p-4" style="background-color: #f0f0f0;">
                             <i class="fas fa-th-large fa-3x mb-3" style="color: #8C3B0C;"></i>
-                            <h5 class="card-title mb-0">View All</h5>
+                            <h5 class="card-title mb-0">{{ t('categories.all') }}</h5>
                         </div>
                     </div>
                 </a>
@@ -165,11 +165,11 @@
     <div class="container">
         <div class="section-header">
             <div>
-                <p class="section-eyebrow">Editor's picks</p>
-                <h2 class="section-title text-start">Featured Products</h2>
+                <p class="section-eyebrow">{{ t('featured.eyebrow') }}</p>
+                <h2 class="section-title text-start">{{ t('featured.title') }}</h2>
             </div>
             <div class="section-cta">
-                <a href="{{ url_for('products') }}" class="btn btn-outline-primary">See all</a>
+                <a href="{{ url_for('products', lang=current_language) }}" class="btn btn-outline-primary">{{ t('featured.cta') }}</a>
             </div>
         </div>
         <div class="product-grid">
@@ -240,15 +240,15 @@
             </div>
             <div class="col-lg-6">
                 <div class="spotlight-copy">
-                    <p class="section-eyebrow">Why AaplaBazaar</p>
-                    <h2>Designed for discerning shoppers</h2>
-                    <p>From heirloom spices to contemporary decor, every listing is vetted for authenticity, craftsmanship, and sustainability. Discover brands that celebrate India's regional excellence.</p>
+                    <p class="section-eyebrow">{{ t('spotlight.eyebrow') }}</p>
+                    <h2>{{ t('spotlight.title') }}</h2>
+                    <p>{{ t('spotlight.desc') }}</p>
                     <ul class="checklist">
-                        <li><i class="fas fa-check-circle me-2"></i>Direct sourcing with fair pricing</li>
-                        <li><i class="fas fa-check-circle me-2"></i>Responsive support for exchanges</li>
-                        <li><i class="fas fa-check-circle me-2"></i>Rich storytelling for every product</li>
+                        <li><i class="fas fa-check-circle me-2"></i>{{ t('spotlight.point1') }}</li>
+                        <li><i class="fas fa-check-circle me-2"></i>{{ t('spotlight.point2') }}</li>
+                        <li><i class="fas fa-check-circle me-2"></i>{{ t('spotlight.point3') }}</li>
                     </ul>
-                    <a href="{{ url_for('products') }}" class="btn btn-primary">Explore collections</a>
+                    <a href="{{ url_for('products', lang=current_language) }}" class="btn btn-primary">{{ t('spotlight.cta') }}</a>
                 </div>
             </div>
         </div>
@@ -258,8 +258,8 @@
 <!-- GI Tagged Products -->
 <section class="gi-tagged-section py-5">
     <div class="container">
-        <h2 class="section-title">GI Tagged Products of India</h2>
-        <p class="text-center mb-4">Geographical Indication (GI) tagged products represent the uniqueness and authenticity of India's diverse heritage.</p>
+        <h2 class="section-title">{{ t('gi.title') }}</h2>
+        <p class="text-center mb-4">{{ t('gi.subtitle') }}</p>
         
         <div class="row">
             {% for product in gi_tagged_products %}
@@ -317,7 +317,7 @@
         </div>
         
         <div class="text-center mt-4">
-            <a href="{{ url_for('gi_tagged_products') }}" class="btn btn-outline-primary btn-lg">View All GI Products</a>
+            <a href="{{ url_for('gi_tagged_products', lang=current_language) }}" class="btn btn-outline-primary btn-lg">{{ t('gi.cta') }}</a>
         </div>
     </div>
 </section>
@@ -329,29 +329,29 @@
             <div class="feature-card">
                 <div class="feature-icon"><i class="fas fa-truck"></i></div>
                 <div>
-                    <h4>Free Shipping</h4>
-                    <p>Complimentary delivery on orders over ₹599 with trusted carriers.</p>
+                    <h4>{{ t('features.free_shipping_title') }}</h4>
+                    <p>{{ t('features.free_shipping_desc') }}</p>
                 </div>
             </div>
             <div class="feature-card">
                 <div class="feature-icon green"><i class="fas fa-undo"></i></div>
                 <div>
-                    <h4>Easy Returns</h4>
-                    <p>7-day hassle-free exchanges for eligible items.</p>
+                    <h4>{{ t('features.easy_returns_title') }}</h4>
+                    <p>{{ t('features.easy_returns_desc') }}</p>
                 </div>
             </div>
             <div class="feature-card">
                 <div class="feature-icon red"><i class="fas fa-shield-alt"></i></div>
                 <div>
-                    <h4>Secure Payments</h4>
-                    <p>PCI-compliant checkout with UPI, cards, and COD options.</p>
+                    <h4>{{ t('features.secure_payments_title') }}</h4>
+                    <p>{{ t('features.secure_payments_desc') }}</p>
                 </div>
             </div>
             <div class="feature-card">
                 <div class="feature-icon brown"><i class="fas fa-headset"></i></div>
                 <div>
-                    <h4>24/7 Support</h4>
-                    <p>Chat, email, and phone support for quick resolutions.</p>
+                    <h4>{{ t('features.support_title') }}</h4>
+                    <p>{{ t('features.support_desc') }}</p>
                 </div>
             </div>
         </div>
@@ -363,13 +363,13 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-6">
-                <h2 class="mb-3">Subscribe to Our Newsletter</h2>
-                <p>Stay updated with the latest products, exclusive offers, and Indian cultural insights.</p>
+                <h2 class="mb-3">{{ t('newsletter.title') }}</h2>
+                <p>{{ t('newsletter.subtitle') }}</p>
             </div>
             <div class="col-lg-6">
                 <form class="d-flex">
-                    <input type="email" class="form-control me-2" placeholder="Your Email Address">
-                    <button type="submit" class="btn btn-light">Subscribe</button>
+                    <input type="email" class="form-control me-2" placeholder="{{ t('newsletter.placeholder') }}">
+                    <button type="submit" class="btn btn-light">{{ t('newsletter.cta') }}</button>
                 </form>
             </div>
         </div>

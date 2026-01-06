@@ -11,6 +11,10 @@ from models import User, Product, Order, OrderItem, CartItem, WishlistItem, Orde
 from forms import LoginForm, RegistrationForm, ProductForm, CheckoutForm, ReviewForm
 from utils import send_sms_notification, generate_order_tracking
 
+# Payment configuration (can be overridden via app.config)
+UPI_VPA = app.config.get('UPI_VPA', 'sohamdhokale9-1@oksbi')
+UPI_PAYEE_NAME = app.config.get('UPI_PAYEE_NAME', 'Aaplabazaar.com')
+
 # Home page
 @app.route('/')
 def index():
@@ -464,7 +468,9 @@ def checkout():
                            title='Checkout',
                            cart_items=cart_items,
                            total=total,
-                           form=form)
+                           form=form,
+                           upi_vpa=UPI_VPA,
+                           upi_payee=UPI_PAYEE_NAME)
 
 
 

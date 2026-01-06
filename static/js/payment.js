@@ -5,6 +5,11 @@ document.addEventListener('DOMContentLoaded', function() {
     initPaymentForm();
     initPaymentMethodSwitcher();
     initUpiScanner();
+
+    // Listen for total updates (e.g., gift wrap)
+    document.addEventListener('checkout:totalUpdated', (e) => {
+        updateUpiQr(e.detail.total);
+    });
 });
 
 // Initialize payment form handling
@@ -107,6 +112,7 @@ function initPaymentMethodSwitcher() {
     const codInfo = document.getElementById('cod-info');
     const upiSection = document.getElementById('upi-section');
     const upiInput = document.getElementById('upi_reference');
+    const upiQrImage = document.getElementById('upi-qr-image');
 
     if (!paymentSelect) return;
 
@@ -126,6 +132,11 @@ function initPaymentMethodSwitcher() {
                 upiInput.classList.remove('is-invalid');
             }
         }
+
+        if (isUpi) {
+            const baseAmount = parseFloat(upiQrImage?.getAttribute('data-base-amount') || '0');
+            updateUpiQr(baseAmount);
+        }
     };
 
     paymentSelect.addEventListener('change', toggleSections);
@@ -138,6 +149,7 @@ function initUpiScanner() {
     const readerElement = document.getElementById('qr-reader');
     const resultElement = document.getElementById('qr-result');
     const upiInput = document.getElementById('upi_reference');
+    const upiQrImage = document.getElementById('upi-qr-image');
 
     if (!scanButton || !readerElement) return;
 
@@ -159,6 +171,10 @@ function initUpiScanner() {
         if (upiInput) {
             upiInput.value = extractUpiId(decodedText);
             upiInput.dispatchEvent(new Event('input'));
+        }
+        if (upiQrImage) {
+            const amount = parseFloat(upiQrImage.getAttribute('data-base-amount') || '0');
+            updateUpiQr(amount);
         }
         if (resultElement) {
             resultElement.textContent = `Scanned: ${decodedText}`;
@@ -192,6 +208,30 @@ function initUpiScanner() {
             stopScanner();
             alert('Unable to access camera for scanning.');
         });
+    });
+}
+
+// Update UPI QR image and deep links
+function updateUpiQr(amount) {
+    const upiQrImage = document.getElementById('upi-qr-image');
+    if (!upiQrImage) return;
+
+    const vpa = upiQrImage.getAttribute('data-upi-vpa') || '';
+    const payee = upiQrImage.getAttribute('data-upi-payee') || 'AaplaBazaar';
+    const amt = Number.isFinite(amount) ? amount.toFixed(2) : '0.00';
+
+    const upiString = `upi://pay?pa=${encodeURIComponent(vpa)}&pn=${encodeURIComponent(payee)}&am=${amt}&cu=INR`;
+    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=${encodeURIComponent(upiString)}`;
+    upiQrImage.src = qrUrl;
+    upiQrImage.setAttribute('data-base-amount', amt);
+
+    // Bind app buttons for deep links
+    document.querySelectorAll('.upi-app-btn').forEach(btn => {
+        btn.onclick = () => {
+            const app = btn.getAttribute('data-upi-app');
+            const intent = upiString;
+            window.location.href = intent;
+        };
     });
 }
 
